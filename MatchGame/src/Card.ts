@@ -1,8 +1,9 @@
-class Card
+class Card extends egret.DisplayObject
 {
     private flipStep:number;
     private isFlipping:boolean = false;
     private flipToFrame:number;
+    public cardFace:number;
     private mc:egret.MovieClip;
 
     public constructor()
@@ -44,10 +45,5 @@ class Card
         {
             this.mc.removeEventListener(egret.Event.ENTER_FRAME, this.flip, this);
         }
-    }
-
-    public getMc():egret.MovieClip
-    {
-        return this.mc;
     }
 }

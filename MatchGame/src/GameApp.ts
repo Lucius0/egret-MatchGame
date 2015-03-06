@@ -36,13 +36,99 @@ class GameApp extends egret.DisplayObjectContainer
             for(var y:number = 0; y < GameApp.boardHeight; y++)
             {
                 var c:Card = new Card();
-                var mc:egret.MovieClip = c.getMc();
-                mc.x = x * GameApp.cardHorizontalSpacing + GameApp.boardOffsetX; // set position
-                mc.y = y * GameApp.cardVerticalSpacing + GameApp.boardOffsetY;
+                c.x = x * GameApp.cardHorizontalSpacing + GameApp.boardOffsetX; // set position
+                c.y = y * GameApp.cardVerticalSpacing + GameApp.boardOffsetY;
                 var r:number = Math.floor(Math.random() * cardList.length);
-                c["cardFace"] = cardList[r];
-                
+                c.cardFace = cardList[r];
+                cardList.splice(r, 1);
+                c.addEventListener(egret.TouchEvent.TOUCH_TAP, this.clickCard, this);
+                c.touchEnabled = true;
+                this.addChild(c);
+                this.cardsLeft++;
             }
         }
+
+        this.gameScoreField = new egret.TextField();
+        this.addChild(this.gameScoreField);
+        this.gameScore = 0;
+        this.showGameScore();
+
+        this.gameTimeField = new egret.TextField();
+        this.gameTimeField.x = 450;
+        this.addChild(this.gameTimeField);
+        this.gameStartTime = egret.getTimer();
+        this.gameTime = 0;
+        this.addEventListener(egret.ENTER_FRAME, this.showTime, this);
+    }
+
+    private clickCard(e:egret.TouchEvent):void
+    {
+        var thisCard:Card = e.target;
+
+        if(this.firstCard == null)
+        {
+            this.firstCard = thisCard;
+            var temp:number = thisCard.cardFace + 2;
+            thisCard.startFlip(temp);
+        }
+        else if(this.firstCard == thisCard)
+        {
+            this.firstCard.startFlip(1);
+            this.firstCard == null;
+        }
+        else if(this.secondCard == null)
+        {
+            this.secondCard = thisCard;
+            var temp:number = thisCard.cardFace + 2;
+            thisCard.startFlip(temp);
+
+            if(this.firstCard.cardFace == this.secondCard.cardFace)
+            {
+                this.removeChild(this.firstCard);
+                this.removeChild(this.secondCard);
+
+                this.firstCard = null;
+                this.secondCard = null;
+
+                this.gameScore += GameApp.pointsForMatch;
+                this.showGameScore();
+
+                if(this.cardsLeft == 0)
+                {
+                    console.log("game over");
+                }
+            }
+            else
+            {
+                this.gameScore += GameApp.pointsForMiss;
+                this.showGameScore();
+                this.flipBackTimer = new egret.Timer(2000, 1);
+                this.flipBackTimer.addEventListener(egret.TimerEvent.TIMER_COMPLETE, this.returnCards, this);
+                this.flipBackTimer.start();
+            }
+        }
+        else
+        {
+            this.returnCards(null);
+
+            this.firstCard = thisCard;
+            var temp:number = thisCard.cardFace + 2;
+            this.firstCard.startFlip(temp);
+        }
+    }
+
+    private returnCards(e:egret.TimerEvent):void
+    {
+
+    }
+
+    private showTime(event:Event):void
+    {
+
+    }
+
+    private showGameScore():void
+    {
+
     }
 }
