@@ -45,4 +45,9 @@ class Card
             this.mc.removeEventListener(egret.Event.ENTER_FRAME, this.flip, this);
         }
     }
+
+    public getMc():egret.MovieClip
+    {
+        return this.mc;
+    }
 }

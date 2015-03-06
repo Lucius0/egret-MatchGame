@@ -31,6 +31,18 @@ class GameApp extends egret.DisplayObjectContainer
         }
 
         this.cardsLeft = 0;
-        for
+        for(var x:number = 0; x < GameApp.boardWidth; x++)
+        {
+            for(var y:number = 0; y < GameApp.boardHeight; y++)
+            {
+                var c:Card = new Card();
+                var mc:egret.MovieClip = c.getMc();
+                mc.x = x * GameApp.cardHorizontalSpacing + GameApp.boardOffsetX; // set position
+                mc.y = y * GameApp.cardVerticalSpacing + GameApp.boardOffsetY;
+                var r:number = Math.floor(Math.random() * cardList.length);
+                c["cardFace"] = cardList[r];
+                
+            }
+        }
     }
 }
