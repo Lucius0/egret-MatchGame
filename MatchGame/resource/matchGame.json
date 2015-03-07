@@ -1,0 +1,18 @@
+{
+	"groups":[
+	{
+		"keys":"card_json, card_png",
+		"name":"matchGame"
+	}],
+	"resources":[
+	{
+		"name":"card_json",
+		"type":"json",
+		"url":"assets/simple/Card/card.json"
+	},
+	{
+		"name":"card_png",
+		"type":"image",
+		"url":"assets/simple/Card/card.png"
+	}]
+}
