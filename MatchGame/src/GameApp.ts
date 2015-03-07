@@ -27,7 +27,7 @@ class GameApp extends egret.DisplayObjectContainer
         for(var i:number = 0; i < GameApp.boardHeight * GameApp.boardWidth / 2; i++)
         {
             cardList.push(i);
-            cardList.push(i);
+            cardList.push(i);;
         }
 
         this.cardsLeft = 0;
