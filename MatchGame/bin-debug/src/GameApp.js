@@ -39,15 +39,18 @@ var GameApp = (function (_super) {
             cardList.push(i);
         }
         this.cardsLeft = 0;
+        var data = RES.getRes("card_json");
+        var texture = RES.getRes("card_png");
+        var mcDataFactory = new egret.MovieClipDataFactory(data, texture);
         for (var x = 0; x < GameApp.boardWidth; x++) {
             for (var y = 0; y < GameApp.boardHeight; y++) {
-                var c = new Card();
+                var c = new egret.MovieClip(mcDataFactory.generateMovieClipData());
                 c.x = x * GameApp.cardHorizontalSpacing + GameApp.boardOffsetX; // set position
                 c.y = y * GameApp.cardVerticalSpacing + GameApp.boardOffsetY;
                 var r = Math.floor(Math.random() * cardList.length);
                 c.cardFace = cardList[r];
                 cardList.splice(r, 1);
-                c.addEventListener(egret.TouchEvent.TOUCH_TAP, this.clickCard, this);
+                c.addEventListener(egret.TouchEvent.TOUCH_END, this.clickCard, this);
                 c.touchEnabled = true;
                 this.addChild(c);
                 this.cardsLeft++;
@@ -67,8 +70,8 @@ var GameApp = (function (_super) {
         this.addEventListener(egret.Event.ENTER_FRAME, this.showTime, this);
     };
     GameApp.prototype.clickCard = function (e) {
+        console.log(1);
         var thisCard = e.target;
-        console.log(thisCard);
         if (this.firstCard == null) {
             this.firstCard = thisCard;
             var temp = thisCard.cardFace + 2;
@@ -133,7 +136,7 @@ var GameApp = (function (_super) {
     GameApp.boardHeight = 6;
     GameApp.cardHorizontalSpacing = 52;
     GameApp.cardVerticalSpacing = 52;
-    GameApp.boardOffsetX = 145;
+    GameApp.boardOffsetX = 50;
     GameApp.boardOffsetY = 70;
     GameApp.pointsForMatch = 100;
     GameApp.pointsForMiss = -5;

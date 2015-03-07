@@ -4,7 +4,7 @@ class GameApp extends egret.DisplayObjectContainer
     private static boardHeight:number = 6;
     private static cardHorizontalSpacing:number = 52;
     private static cardVerticalSpacing:number = 52;
-    private static boardOffsetX:number = 145;
+    private static boardOffsetX:number = 50;
     private static boardOffsetY:number = 70;
     private static pointsForMatch:number = 100;
     private static pointsForMiss:number = -5;
@@ -27,7 +27,7 @@ class GameApp extends egret.DisplayObjectContainer
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);
     }
 
-    private onAddToStage(event: egret.Event)
+    private onAddToStage(event: egret.Event):void
     {
         //初始化Resource资源加载库
         RES.addEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
@@ -37,7 +37,8 @@ class GameApp extends egret.DisplayObjectContainer
     /**
      * 配置文件加载完成,开始预加载preload资源组。
      */
-    private onConfigComplete(event: RES.ResourceEvent): void {
+    private onConfigComplete(event: RES.ResourceEvent): void
+    {
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
         RES.loadGroup("matchGame");
@@ -46,8 +47,10 @@ class GameApp extends egret.DisplayObjectContainer
     /**
      * preload资源组加载完成
      */
-    private onResourceLoadComplete(event: RES.ResourceEvent): void {
-        if (event.groupName == "matchGame") {
+    private onResourceLoadComplete(event: RES.ResourceEvent): void
+    {
+        if (event.groupName == "matchGame")
+        {
             RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
             this.createScene();
         }
@@ -63,11 +66,17 @@ class GameApp extends egret.DisplayObjectContainer
         }
 
         this.cardsLeft = 0;
+
+        var data = RES.getRes("card_json");
+        var texture = RES.getRes("card_png");
+        var mcDataFactory = new egret.MovieClipDataFactory(data, texture);
+
         for(var x:number = 0; x < GameApp.boardWidth; x++)
         {
             for(var y:number = 0; y < GameApp.boardHeight; y++)
             {
-                var c:Card = new Card();
+                var c:Card = <Card>new egret.MovieClip(mcDataFactory.generateMovieClipData());
+
                 c.x = x * GameApp.cardHorizontalSpacing + GameApp.boardOffsetX; // set position
                 c.y = y * GameApp.cardVerticalSpacing + GameApp.boardOffsetY;
                 var r:number = Math.floor(Math.random() * cardList.length);
@@ -97,8 +106,8 @@ class GameApp extends egret.DisplayObjectContainer
 
     private clickCard(e:egret.TouchEvent):void
     {
-        var thisCard:Card = e.target;
-        console.log(thisCard);
+        console.log(1);
+        var thisCard:Card = <Card>e.target;
         if(this.firstCard == null)
         {
             this.firstCard = thisCard;

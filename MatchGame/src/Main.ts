@@ -48,7 +48,7 @@ class Main extends egret.DisplayObjectContainer {
 
         //初始化Resource资源加载库
         RES.addEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
-        RES.loadConfig("resource/resource.json", "resource/");
+        RES.loadConfig("resource/matchGame.json", "resource/");
     }
     /**
      * 配置文件加载完成,开始预加载preload资源组。
@@ -58,20 +58,33 @@ class Main extends egret.DisplayObjectContainer {
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
-        RES.loadGroup("preload");
+        RES.loadGroup("matchGame");
     }
     /**
      * preload资源组加载完成
      */
     private onResourceLoadComplete(event: RES.ResourceEvent): void {
-        if (event.groupName == "preload") {
+        if (event.groupName == "matchGame") {
             this.stage.removeChild(this.loadingView);
             RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
             RES.removeEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError, this);
             RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
-            this.createScene();
+            //this.createScene();
+
+            var data = RES.getRes("card_json");
+            var texture = RES.getRes("card_png");
+            var mcDataFactory = new egret.MovieClipDataFactory(data, texture);
+            var mc = new egret.MovieClip(mcDataFactory.generateMovieClipData());
+            this.addChild(mc);
+            mc.addEventListener(egret.TouchEvent.TOUCH_TAP, this.click, this);
         }
     }
+
+    private click(e:egret.TouchEvent):void
+    {
+        console.log("ok");
+    }
+
     /**
     * 资源组加载出错
     */
