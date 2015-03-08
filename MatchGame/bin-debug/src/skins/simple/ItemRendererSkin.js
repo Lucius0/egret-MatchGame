@@ -23,8 +23,7 @@ var skins;
                         new egret.gui.SetProperty("__4", "source", "app_list_item_select_png"),
                         new egret.gui.SetProperty("labelDisplay", "textColor", 0xf0f0f0)
                     ]),
-                    new egret.gui.State("disabled", [
-                    ])
+                    new egret.gui.State("disabled", [])
                 ];
             }
             Object.defineProperty(ItemRendererSkin.prototype, "skinParts", {

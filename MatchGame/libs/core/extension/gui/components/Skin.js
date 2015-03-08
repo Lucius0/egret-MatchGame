@@ -175,6 +175,11 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
+            /**
+             *
+             * @param value
+             * @private
+             */
             Skin.prototype._setHostComponent = function (value) {
                 if (this._hostComponent == value)
                     return;
@@ -250,6 +255,7 @@ var egret;
                 configurable: true
             });
             /**
+             * 如果存在视域，且传入的索引为 0，则返回该视域
              * @method egret.gui.Skin#getElementAt
              * @param index {number}
              * @returns {IVisualElement}
@@ -264,9 +270,10 @@ var egret;
                 if (addingElement)
                     maxIndex++;
                 if (index < 0 || index > maxIndex)
-                    throw new RangeError("索引:\"" + index + "\"超出可视元素索引范围");
+                    throw new RangeError(egret.getString(3011, index));
             };
             /**
+             * 将可视元素添加到此容器中
              * @method egret.gui.Skin#addElement
              * @param element {IVisualElement}
              * @returns {IVisualElement}
@@ -278,6 +285,7 @@ var egret;
                 return this.addElementAt(element, index);
             };
             /**
+             * 将可视元素添加到此容器中
              * @method egret.gui.Skin#addElementAt
              * @param element {IVisualElement}
              * @param index {number}
@@ -301,6 +309,7 @@ var egret;
                 return element;
             };
             /**
+             * 从此容器的子列表中删除指定的可视元素
              * @method egret.gui.Skin#removeElement
              * @param element {IVisualElement}
              * @returns {IVisualElement}
@@ -309,6 +318,7 @@ var egret;
                 return this.removeElementAt(this.getElementIndex(element));
             };
             /**
+             * 从容器中的指定索引位置删除可视元素
              * @method egret.gui.Skin#removeElementAt
              * @param index {number}
              * @returns {IVisualElement}
@@ -324,6 +334,7 @@ var egret;
                 return element;
             };
             /**
+             * 返回可视元素的索引位置
              * @method egret.gui.Skin#getElementIndex
              * @param element {IVisualElement}
              * @returns {number}
@@ -332,6 +343,7 @@ var egret;
                 return this._elementsContent.indexOf(element);
             };
             /**
+             * 按照索引添加到容器
              * @method egret.gui.Skin#setElementIndex
              * @param element {IVisualElement}
              * @param index {number}

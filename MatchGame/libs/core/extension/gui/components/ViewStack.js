@@ -211,6 +211,9 @@ var egret;
                 }
                 this.dispatchCoEvent(gui.CollectionEventKind.REMOVE, index, -1, [element.name]);
             };
+            /**
+             * 处理对组件设置的属性
+             */
             ViewStack.prototype.commitProperties = function () {
                 _super.prototype.commitProperties.call(this);
                 if (this.proposedSelectedIndex != ViewStack.NO_PROPOSED_SELECTION) {
@@ -233,6 +236,10 @@ var egret;
                     this.dispatchEventWith("IndexChanged"); //通知TabBar自己的选中项发生改变
                 }
             };
+            /**
+             *
+             * @param newIndex
+             */
             ViewStack.prototype.commitSelection = function (newIndex) {
                 var oldIndex = this._selectedIndex;
                 if (newIndex >= 0 && newIndex < this.numElements) {

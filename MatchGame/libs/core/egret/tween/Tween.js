@@ -37,9 +37,13 @@ var egret;
      * @classdesc
      * Tween是Egret的动画缓动类
      * @extends egret.EventDispatcher
+     * @link http://docs.egret-labs.org/post/manual/anim/tween.html Tween缓动动画
      */
     var Tween = (function (_super) {
         __extends(Tween, _super);
+        /**
+         * 创建一个 egret.Tween 对象
+         */
         function Tween(target, props, pluginData) {
             _super.call(this);
             this._target = null;
@@ -59,9 +63,8 @@ var egret;
             this.initialize(target, props, pluginData);
         }
         /**
-         * 激活一个显示对象，对其添加 Tween 动画
-         * @method egret.Tween.get
-         * @param target {egret.DisplayObject} 要激活的显示对象
+         * 激活一个对象，对其添加 Tween 动画
+         * @param target 要激活的对象
          */
         Tween.get = function (target, props, pluginData, override) {
             if (props === void 0) { props = null; }
@@ -73,9 +76,9 @@ var egret;
             return new Tween(target, props, pluginData);
         };
         /**
-         * 删除一个显示对象上的全部 Tween 动画
+         * 删除一个对象上的全部 Tween 动画
          * @method egret.Tween.removeTweens
-         * @param target {egret.DisplayObject}
+         * @param target  需要移除 Tween 的对象
          */
         Tween.removeTweens = function (target) {
             if (!target.tween_count) {
@@ -91,8 +94,8 @@ var egret;
             target.tween_count = 0;
         };
         /**
-         * 暂停某个元件的所有缓动
-         * @param target
+         * 暂停某个对象的所有 Tween
+         * @param target 要暂停 Tween 的对象
          */
         Tween.pauseTweens = function (target) {
             if (!target.tween_count) {
@@ -106,8 +109,8 @@ var egret;
             }
         };
         /**
-         * 继续播放某个元件的所有缓动
-         * @param target
+         * 继续播放某个对象的所有缓动
+         * @param target 要继续播放 Tween 的对象
          */
         Tween.resumeTweens = function (target) {
             if (!target.tween_count) {
@@ -136,7 +139,7 @@ var egret;
             var tweens = Tween._tweens;
             if (value) {
                 if (target) {
-                    target.tween_count = target.tween_count ? target.tween_count + 1 : 1;
+                    target.tween_count = target.tween_count > 0 ? target.tween_count + 1 : 1;
                 }
                 tweens.push(tween);
                 if (!Tween._inited) {
@@ -158,7 +161,7 @@ var egret;
             }
         };
         /**
-         * @method egret.Tween.removeAllTweens
+         * 删除所有 Tween
          */
         Tween.removeAllTweens = function () {
             var tweens = Tween._tweens;
@@ -326,9 +329,10 @@ var egret;
             }
         };
         /**
+         * 设置是否暂停
          * @method egret.Tween#setPaused
-         * @param value {boolean}
-         * @returns {egret.Tween}
+         * @param value {boolean} 是否暂停
+         * @returns Tween对象本身
          */
         Tween.prototype.setPaused = function (value) {
             this.paused = value;
@@ -398,8 +402,8 @@ var egret;
          * 等待指定毫秒后执行下一个动画
          * @method egret.Tween#wait
          * @param duration {number} 要等待的时间，以毫秒为单位
-         * @param passive {boolean}
-         * @returns {egret.Tween}
+         * @param passive {boolean} 等待期间属性是否会更新
+         * @returns Tween对象本身
          */
         Tween.prototype.wait = function (duration, passive) {
             if (duration == null || duration <= 0) {
@@ -414,7 +418,7 @@ var egret;
          * @param props {Object} 对象的属性集合
          * @param duration {number} 持续时间
          * @param ease {egret.Ease} 缓动算法
-         * @returns {egret.Tween}
+         * @returns {egret.Tween} Tween对象本身
          */
         Tween.prototype.to = function (props, duration, ease) {
             if (ease === void 0) { ease = undefined; }
@@ -426,10 +430,10 @@ var egret;
         /**
          * 执行回调函数
          * @method egret.Tween#call
-         * @param callback {Function}
-         * @param thisObj {Object}
-         * @param params {Object}
-         * @returns {egret.Tween}
+         * @param callback {Function} 回调方法
+         * @param thisObj {any} 回调方法this作用域
+         * @param params {Array<any>} 回调方法参数
+         * @returns {egret.Tween} Tween对象本身
          */
         Tween.prototype.call = function (callback, thisObj, params) {
             if (thisObj === void 0) { thisObj = undefined; }
@@ -441,9 +445,10 @@ var egret;
             return this._addAction({ f: this._set, o: this, p: [props, target ? target : this._target] });
         };
         /**
+         * 执行
          * @method egret.Tween#play
-         * @param tween {egret.Tween}
-         * @returns {egret.Tween}
+         * @param tween {egret.Tween} 需要操作的 Tween 对象，默认this
+         * @returns {egret.Tween} Tween对象本身
          */
         Tween.prototype.play = function (tween) {
             if (!tween) {
@@ -452,9 +457,10 @@ var egret;
             return this.call(tween.setPaused, tween, [false]);
         };
         /**
+         * 暂停
          * @method egret.Tween#pause
-         * @param tween {egret.Tween}
-         * @returns {egret.Tween}
+         * @param tween {egret.Tween} 需要操作的 Tween 对象，默认this
+         * @returns {egret.Tween} Tween对象本身
          */
         Tween.prototype.pause = function (tween) {
             if (!tween) {
@@ -465,6 +471,7 @@ var egret;
         /**
          * @method egret.Tween#tick
          * @param delta {number}
+         * @private
          */
         Tween.prototype.tick = function (delta) {
             if (this.paused) {

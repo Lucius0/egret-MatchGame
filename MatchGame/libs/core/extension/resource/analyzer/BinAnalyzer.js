@@ -76,13 +76,13 @@ var RES;
             var loader = (event.target);
             var data = this.resItemDic[loader.hashCode];
             delete this.resItemDic[loader.hashCode];
-            this.recycler.push(loader);
             var resItem = data.item;
             var compFunc = data.func;
             resItem.loaded = (event.type == egret.Event.COMPLETE);
             if (resItem.loaded) {
                 this.analyzeData(resItem, loader.data);
             }
+            this.recycler.push(loader);
             compFunc.call(data.thisObject, resItem);
         };
         /**

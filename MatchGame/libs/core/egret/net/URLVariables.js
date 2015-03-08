@@ -37,11 +37,12 @@ var egret;
      * @classdesc
      * 使用 URLVariables 类可以在应用程序和服务器之间传输变量。
      * 将 URLVariables 对象与 URLLoader 类的方法、URLRequest 类的 data 属性一起使用。
-     * @extends egret.HashObject
+     * @link http://docs.egret-labs.org/post/manual/net/senddata.html 发送带参数的请求
      */
     var URLVariables = (function (_super) {
         __extends(URLVariables, _super);
         /**
+         * 创建一个 egret.URLVariables 对象
          * @method egret.URLVariables#constructor
          * @param source {String} 包含名称/值对的 URL 编码的字符串。
          */

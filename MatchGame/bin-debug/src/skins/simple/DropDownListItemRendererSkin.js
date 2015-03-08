@@ -16,14 +16,12 @@ var skins;
                 this.height = 40;
                 this.elementsContent = [this.__4_i(), this.__5_i(), this.labelDisplay_i()];
                 this.states = [
-                    new egret.gui.State("up", [
-                    ]),
+                    new egret.gui.State("up", []),
                     new egret.gui.State("down", [
                         new egret.gui.SetProperty("__4", "source", "app_list_item_select_png"),
                         new egret.gui.SetProperty("labelDisplay", "textColor", 0xf0f0f0)
                     ]),
-                    new egret.gui.State("disabled", [
-                    ])
+                    new egret.gui.State("disabled", [])
                 ];
             }
             Object.defineProperty(DropDownListItemRendererSkin.prototype, "skinParts", {

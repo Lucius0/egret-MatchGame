@@ -59,6 +59,7 @@ var egret;
                 this._topMostIndex = 0;
                 this._toolTipIndex = 0;
                 this._cursorIndex = 0;
+                this.touchEnabled = false;
                 this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);
                 this.addEventListener(egret.Event.REMOVED_FROM_STAGE, this.onRemoveFromStage, this);
             }
@@ -68,7 +69,7 @@ var egret;
             UIStage.prototype.onAddToStage = function (event) {
                 if (event === void 0) { event = null; }
                 if (gui.UIGlobals._uiStage) {
-                    throw new Error("UIStage是GUI根容器，只能有一个此实例在显示列表中！");
+                    throw new Error(egret.getString(3013));
                 }
                 gui.UIGlobals._uiStage = this;
                 if (this._autoResize) {

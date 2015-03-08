@@ -298,45 +298,40 @@ var egret;
             ButtonBase.prototype.mouseEventHandler = function (event) {
                 var touchEvent = event;
                 switch (event.type) {
-                    case egret.TouchEvent.TOUCH_ROLL_OVER:
-                        {
-                            if (touchEvent.touchDown && !this.mouseCaptured)
-                                return;
-                            this.hovered = true;
-                            break;
-                        }
-                    case egret.TouchEvent.TOUCH_ROLL_OUT:
-                        {
-                            this.hovered = false;
-                            break;
-                        }
-                    case egret.TouchEvent.TOUCH_BEGIN:
-                        {
-                            this.addStageMouseHandlers();
-                            if (egret.InteractionMode.mode == egret.InteractionMode.TOUCH)
-                                this.hovered = true;
-                            this.mouseCaptured = true;
-                            break;
-                        }
-                    case egret.TouchEvent.TOUCH_END:
-                        {
-                            if (event.target == this) {
-                                this.hovered = true;
-                                if (this.mouseCaptured) {
-                                    this.buttonReleased();
-                                    this.mouseCaptured = false;
-                                }
-                            }
-                            break;
-                        }
-                    case egret.TouchEvent.TOUCH_TAP:
-                        {
-                            if (!this.enabled)
-                                event.stopImmediatePropagation();
-                            else
-                                this.clickHandler(event);
+                    case egret.TouchEvent.TOUCH_ROLL_OVER: {
+                        if (touchEvent.touchDown && !this.mouseCaptured)
                             return;
+                        this.hovered = true;
+                        break;
+                    }
+                    case egret.TouchEvent.TOUCH_ROLL_OUT: {
+                        this.hovered = false;
+                        break;
+                    }
+                    case egret.TouchEvent.TOUCH_BEGIN: {
+                        this.addStageMouseHandlers();
+                        if (egret.InteractionMode.mode == egret.InteractionMode.TOUCH)
+                            this.hovered = true;
+                        this.mouseCaptured = true;
+                        break;
+                    }
+                    case egret.TouchEvent.TOUCH_END: {
+                        if (event.target == this) {
+                            this.hovered = true;
+                            if (this.mouseCaptured) {
+                                this.buttonReleased();
+                                this.mouseCaptured = false;
+                            }
                         }
+                        break;
+                    }
+                    case egret.TouchEvent.TOUCH_TAP: {
+                        if (!this.enabled)
+                            event.stopImmediatePropagation();
+                        else
+                            this.clickHandler(event);
+                        return;
+                    }
                 }
             };
             /**
@@ -377,6 +372,7 @@ var egret;
                 gui.UIEvent.dispatchUIEvent(this, gui.UIEvent.BUTTON_DOWN);
             };
             /**
+             * 返回要应用到外观的状态的名称
              * @method egret.gui.ButtonBase#getCurrentSkinState
              * @returns {string}
              */
@@ -389,6 +385,11 @@ var egret;
                     return "over";
                 return "up";
             };
+            /**
+             * 添加外观部件时调用
+             * @param partName
+             * @param instance
+             */
             ButtonBase.prototype.partAdded = function (partName, instance) {
                 _super.prototype.partAdded.call(this, partName, instance);
                 if (instance == this.labelDisplay) {

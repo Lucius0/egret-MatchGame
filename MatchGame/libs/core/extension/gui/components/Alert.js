@@ -49,7 +49,17 @@ var egret;
             function Alert() {
                 _super.call(this);
                 this._firstButtonLabel = "";
+                /**
+                 *
+                 * @type {string}
+                 * @private
+                 */
                 this._secondButtonLabel = "";
+                /**
+                 *
+                 * @type {string}
+                 * @private
+                 */
                 this._contentText = "";
                 /**
                  * 对话框关闭回调函数
@@ -187,6 +197,7 @@ var egret;
                     this.closeHandler(closeEvent);
             };
             /**
+             * 添加外观部件时调用
              * @method egret.gui.Alert#partAdded
              * @param partName {string}
              * @param instance {any}
@@ -207,6 +218,7 @@ var egret;
                 }
             };
             /**
+             * 删除外观部件的实例时调用
              * @method egret.gui.Alert#partRemoved
              * @param partName {string}
              * @param instance {any}

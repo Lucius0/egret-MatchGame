@@ -32,6 +32,9 @@ var __extends = this.__extends || function (d, b) {
 };
 var egret;
 (function (egret) {
+    /**
+     * @private
+     */
     var HTML5TouchContext = (function (_super) {
         __extends(HTML5TouchContext, _super);
         function HTML5TouchContext() {

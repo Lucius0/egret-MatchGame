@@ -44,7 +44,8 @@ var GameApp = (function (_super) {
         var mcDataFactory = new egret.MovieClipDataFactory(data, texture);
         for (var x = 0; x < GameApp.boardWidth; x++) {
             for (var y = 0; y < GameApp.boardHeight; y++) {
-                var c = new egret.MovieClip(mcDataFactory.generateMovieClipData());
+                var c = (mcDataFactory.generateMovieClipData());
+                c.touchEnabled = true;
                 c.x = x * GameApp.cardHorizontalSpacing + GameApp.boardOffsetX; // set position
                 c.y = y * GameApp.cardVerticalSpacing + GameApp.boardOffsetY;
                 var r = Math.floor(Math.random() * cardList.length);
@@ -69,8 +70,7 @@ var GameApp = (function (_super) {
         this.addEventListener(egret.Event.ENTER_FRAME, this.showTime, this);
     };
     GameApp.prototype.clickCard = function (e) {
-        console.log("1111111111111111111111111111");
-        var thisCard = e.target;
+        var thisCard = (e.target);
         if (this.firstCard == null) {
             this.firstCard = thisCard;
             var temp = thisCard.cardFace + 2;

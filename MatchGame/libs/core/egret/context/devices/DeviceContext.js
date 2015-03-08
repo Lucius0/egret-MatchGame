@@ -35,6 +35,7 @@ var egret;
     /**
      * @classdesc
      * @extends egret.HashObject
+     * @private
      */
     var DeviceContext = (function (_super) {
         __extends(DeviceContext, _super);

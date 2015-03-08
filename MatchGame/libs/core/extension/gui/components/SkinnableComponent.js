@@ -100,6 +100,7 @@ var egret;
                 configurable: true
             });
             /**
+             * 创建该容器的子元素对象
              * @method egret.gui.SkinnableComponent#createChildren
              */
             SkinnableComponent.prototype.createChildren = function () {
@@ -216,17 +217,19 @@ var egret;
              * @param skin {any}
              */
             SkinnableComponent.prototype.detachSkin = function (skin) {
-                if (skin && "skinParts" in skin) {
-                    var skinParts = skin.skinParts;
-                    var length = skinParts.length;
-                    for (var i = 0; i < length; i++) {
-                        var partName = skinParts[i];
-                        if (!(partName in this))
-                            continue;
-                        if (this[partName] != null) {
-                            this.partRemoved(partName, this[partName]);
+                if (skin) {
+                    if ("skinParts" in skin) {
+                        var skinParts = skin.skinParts;
+                        var length = skinParts.length;
+                        for (var i = 0; i < length; i++) {
+                            var partName = skinParts[i];
+                            if (!(partName in this))
+                                continue;
+                            if (this[partName] != null) {
+                                this.partRemoved(partName, this[partName]);
+                            }
+                            this[partName] = null;
                         }
-                        this[partName] = null;
                     }
                     skin.hostComponent = null;
                 }
@@ -368,6 +371,7 @@ var egret;
             };
             //========================皮肤视图状态===================end========================
             /**
+             * 处理对组件设置的属性
              * @method egret.gui.SkinnableComponent#commitProperties
              */
             SkinnableComponent.prototype.commitProperties = function () {
@@ -377,12 +381,19 @@ var egret;
                     this.validateSkinState();
                 }
             };
+            /**
+             *
+             * @private
+             */
             SkinnableComponent.prototype._childXYChanged = function () {
                 if (this.skinLayoutEnabled) {
                     this.invalidateSize();
                     this.invalidateDisplayList();
                 }
             };
+            /**
+             * 计算组件的默认大小和（可选）默认最小大小
+             */
             SkinnableComponent.prototype.measure = function () {
                 _super.prototype.measure.call(this);
                 var skin = this._skin;
@@ -405,6 +416,7 @@ var egret;
                 }
             };
             /**
+             * 绘制对象和/或设置其子项的大小和位置
              * @method egret.gui.SkinnableComponent#updateDisplayList
              * @param unscaledWidth {number}
              * @param unscaledHeight {number}
@@ -426,15 +438,17 @@ var egret;
                 }
             };
             /**
+             * 不支持此方法
              * @method egret.gui.SkinnableComponent#addChild
              * @deprecated
              * @param child {DisplayObject}
              * @returns {DisplayObject}
              */
             SkinnableComponent.prototype.addChild = function (child) {
-                throw (new Error("addChild()" + SkinnableComponent.errorStr + "addElement()代替"));
+                throw (new Error(egret.getString(3004, egret.getString(3003))));
             };
             /**
+             *  不支持此方法
              * @method egret.gui.SkinnableComponent#addChildAt
              * @deprecated
              * @param child {DisplayObject}
@@ -442,52 +456,57 @@ var egret;
              * @returns {DisplayObject}
              */
             SkinnableComponent.prototype.addChildAt = function (child, index) {
-                throw (new Error("addChildAt()" + SkinnableComponent.errorStr + "addElementAt()代替"));
+                throw (new Error(egret.getString(3005, egret.getString(3003))));
             };
             /**
+             *  不支持此方法
              * @method egret.gui.SkinnableComponent#removeChild
              * @deprecated
              * @param child {DisplayObject}
              * @returns {DisplayObject}
              */
             SkinnableComponent.prototype.removeChild = function (child) {
-                throw (new Error("removeChild()" + SkinnableComponent.errorStr + "removeElement()代替"));
+                throw (new Error(egret.getString(3006, egret.getString(3003))));
             };
             /**
+             *  不支持此方法
              * @method egret.gui.SkinnableComponent#removeChildAt
              * @deprecated
              * @param index {number}
              * @returns {DisplayObject}
              */
             SkinnableComponent.prototype.removeChildAt = function (index) {
-                throw (new Error("removeChildAt()" + SkinnableComponent.errorStr + "removeElementAt()代替"));
+                throw (new Error(egret.getString(3007, egret.getString(3003))));
             };
             /**
+             *  不支持此方法
              * @method egret.gui.SkinnableComponent#setChildIndex
              * @deprecated
              * @param child {DisplayObject}
              * @param index {number}
              */
             SkinnableComponent.prototype.setChildIndex = function (child, index) {
-                throw (new Error("setChildIndex()" + SkinnableComponent.errorStr + "setElementIndex()代替"));
+                throw (new Error(egret.getString(3008, egret.getString(3003))));
             };
             /**
+             *  不支持此方法
              * @method egret.gui.SkinnableComponent#swapChildren
              * @deprecated
              * @param child1 {DisplayObject}
              * @param child2 {DisplayObject}
              */
             SkinnableComponent.prototype.swapChildren = function (child1, child2) {
-                throw (new Error("swapChildren()" + SkinnableComponent.errorStr + "swapElements()代替"));
+                throw (new Error(egret.getString(3009, egret.getString(3003))));
             };
             /**
+             *  不支持此方法
              * @method egret.gui.SkinnableComponent#swapChildrenAt
              * @deprecated
              * @param index1 {number}
              * @param index2 {number}
              */
             SkinnableComponent.prototype.swapChildrenAt = function (index1, index2) {
-                throw (new Error("swapChildrenAt()" + SkinnableComponent.errorStr + "swapElementsAt()代替"));
+                throw (new Error(egret.getString(3010, egret.getString(3003))));
             };
             /**
              * 皮肤解析适配器
@@ -497,7 +516,6 @@ var egret;
              * 默认皮肤主题解析器
              */
             SkinnableComponent._defaultTheme = null;
-            SkinnableComponent.errorStr = "在此组件中不可用，若此组件为容器类，请使用";
             return SkinnableComponent;
         })(gui.UIComponent);
         gui.SkinnableComponent = SkinnableComponent;

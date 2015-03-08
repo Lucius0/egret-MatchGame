@@ -29,6 +29,7 @@ var egret;
     /**
      * @class egret.HorizontalAlign
      * @classdesc 水平对齐方式
+     * @link http://docs.egret-labs.org/post/manual/text/textlayout.html 文本布局
      */
     var HorizontalAlign = (function () {
         function HorizontalAlign() {

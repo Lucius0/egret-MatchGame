@@ -38,33 +38,39 @@ var egret;
      * 在HTML5中，资源是一个HTMLElement对象
      * 在OpenGL / WebGL中，资源是一个提交GPU后获取的纹理id
      * Texture类封装了这些底层实现的细节，开发者只需要关心接口即可
+     * @link
+     * http://docs.egret-labs.org/post/manual/bitmap/textures.html 纹理集的使用
+     * http://docs.egret-labs.org/post/manual/loader/getres.html 获取资源的几种方式
      */
     var Texture = (function (_super) {
         __extends(Texture, _super);
+        /**
+         * 创建一个 egret.Texture 对象
+         */
         function Texture() {
             _super.call(this);
             /**
-             * 表示这个纹理在bitmapData上的x起始位置
+             * 表示这个纹理在 bitmapData 上的 x 起始位置
              */
             this._bitmapX = 0;
             /**
-             * 表示这个纹理在bitmapData上的y起始位置
+             * 表示这个纹理在 bitmapData 上的 y 起始位置
              */
             this._bitmapY = 0;
             /**
-             * 表示这个纹理在bitmapData上的宽度
+             * 表示这个纹理在 bitmapData 上的宽度
              */
             this._bitmapWidth = 0;
             /**
-             * 表示这个纹理在bitmapData上的高度
+             * 表示这个纹理在 bitmapData 上的高度
              */
             this._bitmapHeight = 0;
             /**
-             * 表示这个纹理显示了之后在x方向的渲染偏移量
+             * 表示这个纹理显示了之后在 x 方向的渲染偏移量
              */
             this._offsetX = 0;
             /**
-             * 表示这个纹理显示了之后在y方向的渲染偏移量
+             * 表示这个纹理显示了之后在 y 方向的渲染偏移量
              */
             this._offsetY = 0;
             this._textureWidth = 0;
@@ -93,7 +99,7 @@ var egret;
         Object.defineProperty(Texture.prototype, "textureHeight", {
             /**
              * 纹理高度
-             * @member {number} egret.Texture#textureWidth
+             * @member {number} egret.Texture#textureHeight
              */
             get: function () {
                 return this._textureHeight;

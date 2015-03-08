@@ -71,6 +71,7 @@ var egret;
                 configurable: true
             });
             /**
+             * 创建容器的子对象
              * @inheritDoc
              */
             ButtonSkin.prototype.createChildren = function () {
@@ -97,6 +98,9 @@ var egret;
                     this.backgroundAsset.source = this.stateMap[state];
                 }
             };
+            /**
+             * 计算 Panel 容器默认大小的最小值和最大值
+             */
             ButtonSkin.prototype.measure = function () {
                 _super.prototype.measure.call(this);
                 var w = this.iconDisplay.preferredWidth + this.labelDisplay.preferredWidth + 20;
@@ -120,6 +124,11 @@ var egret;
                     this.measuredHeight = h;
                 }
             };
+            /**
+             * 通过设置此容器子项的位置和大小来响应大小更改
+             * @param unscaledWidth
+             * @param unscaledHeight
+             */
             ButtonSkin.prototype.updateDisplayList = function (unscaledWidth, unscaledHeight) {
                 _super.prototype.updateDisplayList.call(this, unscaledWidth, unscaledHeight);
                 var iconWidth = this.iconDisplay.layoutBoundsWidth;
@@ -133,6 +142,11 @@ var egret;
                 var labelY = (unscaledHeight - labelHeight) * 0.5;
                 this.labelDisplay.setLayoutBoundsPosition(labelX, labelY);
             };
+            /**
+             *
+             * @type {string[]}
+             * @private
+             */
             ButtonSkin._skinParts = ["labelDisplay", "iconDisplay"];
             return ButtonSkin;
         })(gui.Skin);

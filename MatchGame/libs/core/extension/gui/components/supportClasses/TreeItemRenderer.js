@@ -64,10 +64,35 @@ var egret;
                  * @member egret.gui.TreeItemRenderer#contentGroup
                  */
                 this.contentGroup = null;
+                /**
+                 *
+                 * @type {number}
+                 * @private
+                 */
                 this._indentation = 17;
+                /**
+                 *
+                 * @type {null}
+                 * @private
+                 */
                 this._iconSkinName = null;
+                /**
+                 *
+                 * @type {number}
+                 * @private
+                 */
                 this._depth = 0;
+                /**
+                 *
+                 * @type {boolean}
+                 * @private
+                 */
                 this._hasChildren = false;
+                /**
+                 *
+                 * @type {boolean}
+                 * @private
+                 */
                 this._isOpen = false;
                 this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onItemMouseDown, this, false, 1000);
             }
@@ -163,6 +188,7 @@ var egret;
                 configurable: true
             });
             /**
+             * 添加外观部件时调用
              * @method egret.gui.TreeItemRenderer#partAdded
              * @param partName {string}
              * @param instance {any}
@@ -183,6 +209,7 @@ var egret;
                 }
             };
             /**
+             * 删除外观部件的实例时调用
              * @method egret.gui.TreeItemRenderer#partRemoved
              * @param partName {string}
              * @param instance {any}

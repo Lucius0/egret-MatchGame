@@ -36,9 +36,15 @@ var egret;
      * @class egret.MovieClipDataFactory
      * @classdesc 使用 MovieClipDataFactory 类，可以生成 MovieClipData 对象用于创建MovieClip
      * @extends egret.EventDispatcher
+     * @link http://docs.egret-labs.org/post/manual/displaycon/movieclip.html MovieClip序列帧动画
      */
     var MovieClipDataFactory = (function (_super) {
         __extends(MovieClipDataFactory, _super);
+        /**
+         * 创建一个 egret.MovieClipDataFactory 对象
+         * @param movieClipDataSet {any} MovieClip数据集
+         * @param texture {Texture} 纹理
+         */
         function MovieClipDataFactory(movieClipDataSet, texture) {
             _super.call(this);
             /**

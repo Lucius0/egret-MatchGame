@@ -23,6 +23,9 @@ var __extends = this.__extends || function (d, b) {
 };
 var RES;
 (function (RES) {
+    /**
+     * @classic
+     */
     var AnalyzerBase = (function (_super) {
         __extends(AnalyzerBase, _super);
         function AnalyzerBase() {

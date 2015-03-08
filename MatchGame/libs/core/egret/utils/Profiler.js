@@ -43,6 +43,7 @@ var egret;
             this._tick = 0;
             this._maxDeltaTime = 500;
             this._totalDeltaTime = 0;
+            this._isRunning = false;
         }
         /**
          * 返回系统中唯一的Profiler实例。
@@ -54,24 +55,47 @@ var egret;
             }
             return Profiler.instance;
         };
+        Profiler.prototype.stop = function () {
+            if (!this._isRunning) {
+                return;
+            }
+            this._isRunning = false;
+            egret.Ticker.getInstance().unregister(this.update, this);
+            var context = egret.MainContext.instance;
+            context.removeEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
+            context.removeEventListener(egret.Event.RENDER, this.onStartRender, this);
+            context.removeEventListener(egret.Event.FINISH_RENDER, this.onFinishRender, this);
+            context.removeEventListener(egret.Event.FINISH_UPDATE_TRANSFORM, this.onFinishUpdateTransform, this);
+        };
         /**
          * 启动Profiler
          * @method egret.Profiler#run
          */
         Profiler.prototype.run = function () {
             //todo 加入debug参数
-            egret.Ticker.getInstance().register(this.update, this);
             if (this._txt == null) {
                 this._txt = new egret.TextField();
                 this._txt.size = 28;
                 this._txt.multiline = true;
-                egret.MainContext.instance.stage.addChild(this._txt);
+                this._txt._parent = new egret.DisplayObjectContainer();
             }
+            if (this._isRunning) {
+                return;
+            }
+            this._isRunning = true;
+            egret.Ticker.getInstance().register(this.update, this);
             var context = egret.MainContext.instance;
             context.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
             context.addEventListener(egret.Event.RENDER, this.onStartRender, this);
             context.addEventListener(egret.Event.FINISH_RENDER, this.onFinishRender, this);
             context.addEventListener(egret.Event.FINISH_UPDATE_TRANSFORM, this.onFinishUpdateTransform, this);
+        };
+        Profiler.prototype._drawProfiler = function () {
+            this._txt._updateTransform();
+            this._txt._draw(egret.MainContext.instance.rendererContext);
+        };
+        Profiler.prototype._setTxtFontSize = function (fontSize) {
+            this._txt.size = fontSize;
         };
         /**
          * @private
@@ -107,7 +131,7 @@ var egret;
             this._tick++;
             this._totalDeltaTime += frameTime;
             if (this._totalDeltaTime >= this._maxDeltaTime) {
-                var drawStr = (this._preDrawCount - 1).toString();
+                var drawStr = (this._preDrawCount - 3).toString();
                 var timeStr = Math.ceil(this._logicPerformanceCost).toString() + "," + Math.ceil(this._updateTransformPerformanceCost).toString() + "," + Math.ceil(this._renderPerformanceCost).toString() + "," + Math.ceil(egret.MainContext.instance.rendererContext.renderCost).toString();
                 var frameStr = Math.floor(this._tick * 1000 / this._totalDeltaTime).toString();
                 this._txt.text = "draw:" + drawStr + "\n" + "cost:" + timeStr + "\n" + "FPS:" + frameStr;

@@ -40,6 +40,9 @@ var egret;
      */
     var RenderTexture = (function (_super) {
         __extends(RenderTexture, _super);
+        /**
+         * 创建一个 egret.RenderTexture 对象
+         */
         function RenderTexture() {
             _super.call(this);
         }
@@ -48,11 +51,11 @@ var egret;
             this.renderContext = egret.RendererContext.createRendererContext(this._bitmapData);
         };
         /**
-         * 将制定显示对象绘制为一个纹理
+         * 将指定显示对象绘制为一个纹理
          * @method egret.RenderTexture#drawToTexture
-         * @param displayObject {egret.DisplayObject}
-         * @param clipBounds {egret.Rectangle}
-         * @param scale number
+         * @param displayObject {egret.DisplayObject} 需要绘制的显示对象
+         * @param clipBounds {egret.Rectangle} 绘制矩形区域
+         * @param scale {number} 缩放比例
          */
         RenderTexture.prototype.drawToTexture = function (displayObject, clipBounds, scale) {
             var bounds = clipBounds || displayObject.getBounds(egret.Rectangle.identity);
@@ -80,30 +83,33 @@ var egret;
                 displayObject._worldTransform.a *= scale;
                 displayObject._worldTransform.d *= scale;
             }
-            this.renderContext.setTransform(displayObject._worldTransform);
+            var anchorOffsetX = displayObject._anchorOffsetX;
+            var anchorOffsetY = displayObject._anchorOffsetY;
+            if (displayObject._anchorX != 0 || displayObject._anchorY != 0) {
+                anchorOffsetX = displayObject._anchorX * width;
+                anchorOffsetY = displayObject._anchorY * height;
+            }
+            this._offsetX = x + anchorOffsetX;
+            this._offsetY = y + anchorOffsetY;
+            displayObject._worldTransform.append(1, 0, 0, 1, -this._offsetX, -this._offsetY);
             displayObject.worldAlpha = 1;
             if (displayObject instanceof egret.DisplayObjectContainer) {
-                var anchorOffsetX = displayObject._anchorOffsetX;
-                var anchorOffsetY = displayObject._anchorOffsetY;
-                if (displayObject._anchorX != 0 || displayObject._anchorY != 0) {
-                    anchorOffsetX = displayObject._anchorX * width;
-                    anchorOffsetY = displayObject._anchorY * height;
-                }
-                this._offsetX = x + anchorOffsetX;
-                this._offsetY = y + anchorOffsetY;
-                displayObject._worldTransform.append(1, 0, 0, 1, -this._offsetX, -this._offsetY);
                 var list = displayObject._children;
                 for (var i = 0, length = list.length; i < length; i++) {
                     var child = list[i];
                     child._updateTransform();
                 }
             }
+            this.renderContext.setTransform(displayObject._worldTransform);
             var renderFilter = egret.RenderFilter.getInstance();
             var drawAreaList = renderFilter._drawAreaList.concat();
             renderFilter._drawAreaList.length = 0;
             this.renderContext.clearScreen();
             this.renderContext.onRenderStart();
             egret.RendererContext.deleteTexture(this);
+            if (displayObject._filter) {
+                this.renderContext.setGlobalFilter(displayObject._filter);
+            }
             if (displayObject._colorTransform) {
                 this.renderContext.setGlobalColorTransform(displayObject._colorTransform.matrix);
             }
@@ -111,12 +117,18 @@ var egret;
             if (mask) {
                 this.renderContext.pushMask(mask);
             }
+            var __use_new_draw = egret.MainContext.__use_new_draw;
+            egret.MainContext.__use_new_draw = false;
             displayObject._render(this.renderContext);
+            egret.MainContext.__use_new_draw = __use_new_draw;
             if (mask) {
                 this.renderContext.popMask();
             }
             if (displayObject._colorTransform) {
                 this.renderContext.setGlobalColorTransform(null);
+            }
+            if (displayObject._filter) {
+                this.renderContext.setGlobalFilter(null);
             }
             RenderTexture.identityRectangle.width = width;
             RenderTexture.identityRectangle.height = height;

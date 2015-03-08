@@ -101,6 +101,7 @@ var egret;
                 configurable: true
             });
             /**
+             * 返回指定索引处的可视元素
              * @param index {number}
              * @returns {IVisualElement}
              */
@@ -108,6 +109,7 @@ var egret;
                 return this._getCurrentContentGroup().getElementAt(index);
             };
             /**
+             * 将可视元素添加到此容器中
              * @param element {IVisualElement}
              * @returns {IVisualElement}
              */
@@ -115,6 +117,7 @@ var egret;
                 return this._getCurrentContentGroup().addElement(element);
             };
             /**
+             * 将可视元素添加到此容器中
              * @param element {IVisualElement}
              * @param index {number}
              * @returns {IVisualElement}
@@ -123,6 +126,7 @@ var egret;
                 return this._getCurrentContentGroup().addElementAt(element, index);
             };
             /**
+             * 从此容器的子列表中删除指定的可视元素
              * @param element {IVisualElement}
              * @returns {IVisualElement}
              */
@@ -130,6 +134,7 @@ var egret;
                 return this._getCurrentContentGroup().removeElement(element);
             };
             /**
+             * 从容器中的指定索引位置删除可视元素
              * @param index {number}
              * @returns {IVisualElement}
              */
@@ -137,11 +142,13 @@ var egret;
                 return this._getCurrentContentGroup().removeElementAt(index);
             };
             /**
+             * 删除容器中的所有子元素
              */
             SkinnableContainer.prototype.removeAllElements = function () {
                 this._getCurrentContentGroup().removeAllElements();
             };
             /**
+             * 获取子元素对象在容器中的索引值
              * @param element {IVisualElement}
              * @returns {number}
              */
@@ -149,6 +156,7 @@ var egret;
                 return this._getCurrentContentGroup().getElementIndex(element);
             };
             /**
+             * 根据索引设置子元素的显示
              * @param element {IVisualElement}
              * @param index {number}
              */
@@ -156,6 +164,7 @@ var egret;
                 this._getCurrentContentGroup().setElementIndex(element, index);
             };
             /**
+             * 交换两个指定可视元素的索引
              * @param element1 {IVisualElement}
              * @param element2 {IVisualElement}
              */
@@ -163,6 +172,7 @@ var egret;
                 this._getCurrentContentGroup().swapElements(element1, element2);
             };
             /**
+             * 交换容器中位于两个指定索引位置的可视元素
              * @param index1 {number}
              * @param index2 {number}
              */
@@ -189,6 +199,7 @@ var egret;
                 configurable: true
             });
             /**
+             * [覆盖] 添加外观部件时调用
              * @param partName {string}
              * @param instance {any}
              */
@@ -220,6 +231,7 @@ var egret;
                 }
             };
             /**
+             * [覆盖] 正删除外观部件的实例时调用
              * @param partName {string}
              * @param instance {any}
              */

@@ -29,8 +29,12 @@ var egret;
     /**
      * @class egret.Sound
      * @classdesc Sound 类允许您在应用程序中使用声音。
+     * @link http://docs.egret-labs.org/post/manual/sound/playsound.html 播放音频
      */
     var Sound = (function () {
+        /**
+         * 创建 egret.Sound 对象
+         */
         function Sound() {
             this.path = "";
             /**
@@ -38,6 +42,11 @@ var egret;
              * @member {any} egret.Sound#audio
              */
             this.audio = null;
+            /**
+             * 类型，默认为 egret.Sound.EFFECT。
+             * 在 native 和 runtime 环境下，背景音乐同时只能播放一个，音效长度尽量不要太长。
+             * @member {any} egret.Sound#audio
+             */
             this.type = Sound.EFFECT;
         }
         /**
@@ -127,7 +136,15 @@ var egret;
         Sound.prototype._setAudio = function (value) {
             this.audio = value;
         };
+        /**
+         * 背景音乐
+         * @constant egret.Sound.MUSIC
+         */
         Sound.MUSIC = "music";
+        /**
+         * 音效
+         * @constant egret.Sound.EFFECT
+         */
         Sound.EFFECT = "effect";
         return Sound;
     })();

@@ -31,6 +31,7 @@ var egret;
      * @classdesc
      * Graphics 类包含一组可用来创建矢量形状的方法。支持绘制的显示对象包括 Sprite 和 Shape 对象。这些类中的每一个类都包括 graphics 属性，该属性是一个 Graphics 对象。
      * 以下是为便于使用而提供的一些辅助函数：drawRect()、drawRoundRect()、drawCircle() 和 drawEllipse()。
+     * @link http://docs.egret-labs.org/post/manual/graphics/drawrect.html  绘制矩形
      */
     var Graphics = (function () {
         function Graphics() {
@@ -40,6 +41,7 @@ var egret;
             this.strokeStyleColor = null;
             this.fillStyleColor = null;
             this._dirty = false;
+            this._firstCheck = true;
             this._minX = 0;
             this._minY = 0;
             this._maxX = 0;
@@ -168,6 +170,7 @@ var egret;
             this._minY = 0;
             this._maxX = 0;
             this._maxY = 0;
+            this._firstCheck = true;
         };
         /**
          * 对从上一次调用 beginFill()方法之后添加的直线和曲线应用填充。
@@ -178,18 +181,39 @@ var egret;
         Graphics.prototype._draw = function (renderContext) {
         };
         Graphics.prototype.checkRect = function (x, y, w, h) {
-            this._minX = Math.min(this._minX, x);
-            this._minY = Math.min(this._minY, y);
-            this._maxX = Math.max(this._maxX, x + w);
-            this._maxY = Math.max(this._maxY, y + h);
+            if (this._firstCheck) {
+                this._firstCheck = false;
+                this._minX = x;
+                this._minY = y;
+                this._maxX = x + w;
+                this._maxY = y + h;
+            }
+            else {
+                this._minX = Math.min(this._minX, x);
+                this._minY = Math.min(this._minY, y);
+                this._maxX = Math.max(this._maxX, x + w);
+                this._maxY = Math.max(this._maxY, y + h);
+            }
         };
         Graphics.prototype.checkPoint = function (x, y) {
-            this._minX = Math.min(this._minX, x);
-            this._minY = Math.min(this._minY, y);
-            this._maxX = Math.max(this._maxX, x);
-            this._maxY = Math.max(this._maxY, y);
+            if (this._firstCheck) {
+                this._firstCheck = false;
+                this._minX = x;
+                this._minY = y;
+                this._maxX = x;
+                this._maxY = y;
+            }
+            else {
+                this._minX = Math.min(this._minX, x);
+                this._minY = Math.min(this._minY, y);
+                this._maxX = Math.max(this._maxX, x);
+                this._maxY = Math.max(this._maxY, y);
+            }
             this._lastX = x;
             this._lastY = y;
+        };
+        Graphics.prototype._measureBounds = function () {
+            return egret.Rectangle.identity.initialize(this._minX, this._minY, this._maxX - this._minX, this._maxY - this._minY);
         };
         return Graphics;
     })();

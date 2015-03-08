@@ -53,6 +53,17 @@ var egret;
                 this._scrollTop = 0;
                 this._content = null;
                 /**
+                 * 开始滚动的阈值，当触摸点偏离初始触摸点的距离超过这个值时才会触发滚动
+                 * @member {number} egret.gui.Scroller#scrollBeginThreshold
+                 */
+                this.scrollBeginThreshold = 10;
+                /**
+                 * 滚动速度，这个值为需要的速度与默认速度的比值。
+                 * 取值范围为 scrollSpeed > 0 赋值为 2 时，速度是默认速度的 2 倍
+                 * @member {number} egret.gui.Scroller#scrollSpeed
+                 */
+                this.scrollSpeed = 1;
+                /**
                      * [SkinPart]水平滚动条
                      */
                 this.horizontalScrollBar = null;
@@ -66,7 +77,7 @@ var egret;
                 this._viewport = null;
                 this._autoHideScrollBars = true;
                 this._autoHideTimer = NaN;
-                this._autoHideDelay = 3000;
+                this._autoHideDelay = 300;
                 this._autoHideShowAnimat = null;
                 this._animatTargetIsShow = false;
                 egret.ScrollView.call(this);
@@ -88,12 +99,14 @@ var egret;
             Scroller.prototype.getMaxScrollLeft = function () {
                 var content = this._content;
                 var max = content.contentWidth - content.width;
-                return Math.max(max, 0);
+                var min = content.initialized ? 0 : (content.horizontalScrollPosition || 0);
+                return Math.max(max, min);
             };
             Scroller.prototype.getMaxScrollTop = function () {
                 var content = this._content;
                 var max = content.contentHeight - content.height;
-                return Math.max(max, 0);
+                var min = content.initialized ? 0 : (content.verticalScrollPosition || 0);
+                return Math.max(max, min);
             };
             Scroller.prototype._getContentWidth = function () {
                 return this._content.contentWidth;
@@ -101,7 +114,16 @@ var egret;
             Scroller.prototype._getContentHeight = function () {
                 return this._content.contentHeight;
             };
+            Scroller.prototype._onScrollStarted = function () {
+                egret.ScrollView.prototype._onScrollStarted.call(this);
+                gui.UIEvent.dispatchUIEvent(this, gui.UIEvent.CHANGE_START);
+            };
+            Scroller.prototype._onScrollFinished = function () {
+                egret.ScrollView.prototype._onScrollFinished.call(this);
+                gui.UIEvent.dispatchUIEvent(this, gui.UIEvent.CHANGE_END);
+            };
             /**
+             * 计算组件的默认大小和（可选）默认最小大小
              * @method egret.gui.Scroller#measure
              */
             Scroller.prototype.measure = function () {
@@ -111,6 +133,7 @@ var egret;
                 this.measuredHeight = this._viewport.preferredHeight;
             };
             /**
+             * 绘制对象和/或设置其子项的大小和位置
              * @param unscaledWidth {number}
              * @param unscaledHeight {number}
              */
@@ -129,6 +152,8 @@ var egret;
                         hbar.x = hbar.left || 0;
                         hbar.y = unscaledHeight - this.horizontalScrollBar.layoutBoundsHeight;
                         hbar.visible = this._horizontalScrollPolicy == gui.ScrollPolicy.ON || this._scroller._hCanScroll;
+                        if (this._autoHideScrollBars)
+                            hbar.alpha = 0;
                     }
                 }
                 if (this._verticalScrollPolicy != "off") {
@@ -143,6 +168,8 @@ var egret;
                         vbar.y = vbar.top || 0;
                         vbar.x = unscaledWidth - this.verticalScrollBar.layoutBoundsWidth;
                         vbar.visible = this._verticalScrollPolicy == gui.ScrollPolicy.ON || this._scroller._vCanScroll;
+                        if (this._autoHideScrollBars)
+                            vbar.alpha = 0;
                     }
                 }
             };
@@ -224,6 +251,11 @@ var egret;
                     this._removeFromDisplayList(this.viewport);
                 }
             };
+            /**
+             *
+             * @param e
+             * @private
+             */
             Scroller.prototype._viewportChangedHandler = function (e) {
                 if (e.property == "horizontalScrollPosition")
                     this.setViewportHScrollPosition(this.viewport.horizontalScrollPosition);
@@ -234,10 +266,19 @@ var egret;
                     this.invalidateSize();
                 }
             };
+            /**
+             *
+             * @param e
+             * @private
+             */
             Scroller.prototype._scrollerChangedHandler = function (e) {
                 this.setViewportHScrollPosition(this._scroller.scrollLeft);
                 this.setViewportVScrollPosition(this._scroller.scrollTop);
             };
+            /**
+             *
+             * @param pos
+             */
             Scroller.prototype.setViewportVScrollPosition = function (pos) {
                 if (this._scroller.scrollTop != pos)
                     this._scroller.scrollTop = pos;
@@ -309,7 +350,7 @@ var egret;
                 configurable: true
             });
             Scroller.prototype.setAutoHideTimer = function () {
-                if (!this._autoHideScrollBars)
+                if (!this._autoHideScrollBars || !this.initialized)
                     return;
                 if (!this.horizontalScrollBar && !this.verticalScrollBar)
                     return;
@@ -320,7 +361,7 @@ var egret;
             };
             Scroller.prototype.hideOrShow = function (show) {
                 var _this = this;
-                if (!this.horizontalScrollBar && !this.verticalScrollBar)
+                if (!this.initialized || (!this.horizontalScrollBar && !this.verticalScrollBar))
                     return;
                 if (this._autoHideShowAnimat == null) {
                     this._autoHideShowAnimat = new gui.Animation(function (b) {
@@ -343,7 +384,7 @@ var egret;
                     from: show ? 0 : 1,
                     to: show ? 1 : 0
                 }];
-                animat.duration = show ? 100 : 500;
+                animat.duration = show ? 100 : 300;
                 animat.play();
             };
             Object.defineProperty(Scroller.prototype, "numElements", {
@@ -360,9 +401,10 @@ var egret;
              * 抛出索引越界异常
              */
             Scroller.prototype.throwRangeError = function (index) {
-                throw new RangeError("索引:\"" + index + "\"超出可视元素索引范围");
+                throw new RangeError(egret.getString(3011, index));
             };
             /**
+             * 如果存在视域，且传入的索引为 0，则返回该视域
              * @param index {number}
              * @returns {IVisualElement}
              */
@@ -374,6 +416,7 @@ var egret;
                 return null;
             };
             /**
+             * 如果传入的元素是视域，则返回 0
              * @param element {IVisualElement}
              * @returns {number}
              */
@@ -384,6 +427,7 @@ var egret;
                     return -1;
             };
             /**
+             * 确定指定显示对象是 DisplayObjectContainer 实例的子项还是该实例本身
              * @param element {IVisualElement}
              * @returns {boolean}
              */
@@ -393,9 +437,10 @@ var egret;
                 return false;
             };
             Scroller.prototype.throwNotSupportedError = function () {
-                throw new Error("此方法在Scroller组件内不可用!");
+                throw new Error(egret.getString(3012));
             };
             /**
+             * Scroller 不支持该操作
              * @deprecated
              * @param element {IVisualElement}
              * @returns {IVisualElement}
@@ -405,6 +450,7 @@ var egret;
                 return null;
             };
             /**
+             * Scroller 不支持该操作
              * @deprecated
              * @param element {IVisualElement}
              * @param index {number}
@@ -415,6 +461,7 @@ var egret;
                 return null;
             };
             /**
+             * Scroller 不支持该操作
              * @deprecated
              * @param element {IVisualElement}
              * @returns {IVisualElement}
@@ -424,6 +471,7 @@ var egret;
                 return null;
             };
             /**
+             * Scroller 不支持该操作
              * @deprecated
              * @param index {number}
              * @returns {IVisualElement}
@@ -433,12 +481,14 @@ var egret;
                 return null;
             };
             /**
+             * Scroller 不支持该操作
              * @deprecated
              */
             Scroller.prototype.removeAllElements = function () {
                 this.throwNotSupportedError();
             };
             /**
+             * Scroller 不支持该操作
              * @deprecated
              * @param element {IVisualElement}
              * @param index {number}
@@ -447,6 +497,7 @@ var egret;
                 this.throwNotSupportedError();
             };
             /**
+             * Scroller 不支持该操作
              * @deprecated
              * @param element1 {IVisualElement}
              * @param element2 {IVisualElement}
@@ -455,6 +506,7 @@ var egret;
                 this.throwNotSupportedError();
             };
             /**
+             * Scroller 不支持该操作
              * @deprecated
              * @param index1 {number}
              * @param index2 {number}
@@ -463,6 +515,7 @@ var egret;
                 this.throwNotSupportedError();
             };
             /**
+             * Scroller 不支持该操作
              * @deprecated
              * @param child {DisplayObject}
              * @returns {DisplayObject}
@@ -472,6 +525,7 @@ var egret;
                 return null;
             };
             /**
+             * Scroller 不支持该操作
              * @deprecated
              * @param child {DisplayObject}
              * @param index {number}
@@ -482,6 +536,7 @@ var egret;
                 return null;
             };
             /**
+             * Scroller 不支持该操作
              * @deprecated
              * @param child {DisplayObject}
              * @returns {DisplayObject}
@@ -491,6 +546,7 @@ var egret;
                 return null;
             };
             /**
+             * Scroller 不支持该操作
              * @deprecated
              * @param index {number}
              * @returns {DisplayObject}
@@ -500,6 +556,7 @@ var egret;
                 return null;
             };
             /**
+             * Scroller 不支持该操作
              * @deprecated
              * @param child {DisplayObject}
              * @param index {number}
@@ -508,6 +565,7 @@ var egret;
                 this.throwNotSupportedError();
             };
             /**
+             * Scroller 不支持该操作
              * @deprecated
              * @param child1 {DisplayObject}
              * @param child2 {DisplayObject}
@@ -516,6 +574,7 @@ var egret;
                 this.throwNotSupportedError();
             };
             /**
+             * Scroller 不支持该操作
              * @deprecated
              * @param index1 {number}
              * @param index2 {number}
@@ -523,6 +582,10 @@ var egret;
             Scroller.prototype.swapChildrenAt = function (index1, index2) {
                 this.throwNotSupportedError();
             };
+            /**
+             *
+             * @private
+             */
             Scroller.prototype._checkHbar = function () {
                 if (this._horizontalScrollPolicy == "off") {
                     this._uninstallHorizontalScrollBar();
@@ -538,6 +601,10 @@ var egret;
                 }
                 this._addToDisplayList(this.horizontalScrollBar);
             };
+            /**
+             *
+             * @private
+             */
             Scroller.prototype._checkVbar = function () {
                 if (this._verticalScrollPolicy == "off") {
                     this._uninstallVerticalScrollBar();
@@ -555,6 +622,9 @@ var egret;
                 }
                 this._addToDisplayList(this.verticalScrollBar);
             };
+            /**
+             * 创建容器的子元素
+             */
             Scroller.prototype.createChildren = function () {
                 _super.prototype.createChildren.call(this);
                 this.installViewport();

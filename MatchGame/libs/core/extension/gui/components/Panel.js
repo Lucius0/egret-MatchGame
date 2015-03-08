@@ -76,6 +76,11 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
+            /**
+             * [覆盖] 添加外观部件时调用
+             * @param partName
+             * @param instance
+             */
             Panel.prototype.partAdded = function (partName, instance) {
                 _super.prototype.partAdded.call(this, partName, instance);
                 if (instance == this.titleDisplay) {

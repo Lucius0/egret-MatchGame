@@ -43,6 +43,7 @@ var egret;
         var SkinBasicLayout = (function (_super) {
             __extends(SkinBasicLayout, _super);
             /**
+             * 构造函数
              * @method egret.gui.SkinBasicLayout#constructor
              */
             function SkinBasicLayout() {

@@ -16,10 +16,8 @@ var skins;
                 this.__s(this, ["minHeight", "minWidth"], [13, 13]);
                 this.elementsContent = [this.track_i(), this.trackHighlight_i(), this.thumb_i()];
                 this.states = [
-                    new egret.gui.State("normal", [
-                    ]),
-                    new egret.gui.State("disabled", [
-                    ])
+                    new egret.gui.State("normal", []),
+                    new egret.gui.State("disabled", [])
                 ];
             }
             Object.defineProperty(VSliderSkin.prototype, "skinParts", {

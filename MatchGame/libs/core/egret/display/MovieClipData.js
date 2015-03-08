@@ -36,9 +36,13 @@ var egret;
      * @class egret.MovieClipData
      * @classdesc 使用 MovieClipData 类，您可以创建 MovieClip 对象和处理 MovieClip 对象的数据。MovieClipData 一般由MovieClipDataFactory生成
      * @extends egret.HashObject
+     * @link http://docs.egret-labs.org/post/manual/displaycon/movieclip.html MovieClip序列帧动画
      */
     var MovieClipData = (function (_super) {
         __extends(MovieClipData, _super);
+        /**
+         * 创建一个 egret.MovieClipData 对象
+         */
         function MovieClipData() {
             _super.call(this);
             /**

@@ -26,6 +26,10 @@
  */
 var egret;
 (function (egret) {
+    /**
+     *
+     * @private
+     */
     var WebGLShaderManager = (function () {
         function WebGLShaderManager(gl) {
             this.gl = null;
@@ -36,6 +40,7 @@ var egret;
             this.defaultShader = null;
             this.primitiveShader = null;
             this.colorTransformShader = null;
+            this.blurShader = null;
             for (var i = 0; i < this.maxAttibs; i++) {
                 this.attribState[i] = false;
             }
@@ -46,6 +51,7 @@ var egret;
             this.primitiveShader = new egret.PrimitiveShader(gl);
             this.defaultShader = new egret.EgretShader(gl);
             this.colorTransformShader = new egret.ColorTransformShader(gl);
+            this.blurShader = new egret.BlurShader(gl);
             this.activateShader(this.defaultShader);
         };
         WebGLShaderManager.prototype.activateShader = function (shader) {

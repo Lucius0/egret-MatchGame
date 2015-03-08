@@ -44,6 +44,7 @@ var egret;
         var ItemRenderer = (function (_super) {
             __extends(ItemRenderer, _super);
             /**
+             * 构造函数
              * @method egret.gui.ItemRenderer#constructor
              */
             function ItemRenderer() {
@@ -113,6 +114,7 @@ var egret;
                 configurable: true
             });
             /**
+             * 处理对组件设置的属性
              * @method egret.gui.ItemRenderer#commitProperties
              */
             ItemRenderer.prototype.commitProperties = function () {
@@ -123,6 +125,7 @@ var egret;
                 }
             };
             /**
+             * 返回要应用到呈示器的状态的名称
              * @method egret.gui.ItemRenderer#getCurrentSkinState
              * @returns {string}
              */

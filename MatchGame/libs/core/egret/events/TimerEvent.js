@@ -38,11 +38,12 @@ var egret;
      * @classdesc
      * 每当 Timer 对象达到由 Timer.delay 属性指定的间隔时，Timer 对象即会调度 TimerEvent 对象。
      * @extends egret.Event
+     * @link http://docs.egret-labs.org/post/manual/timer/timer.html Timer计时器
      */
     var TimerEvent = (function (_super) {
         __extends(TimerEvent, _super);
         /**
-         *
+         * 创建一个 egret.TimerEvent 对象
          * @method egret.TimerEvent#constructor
          * @param type {string} 事件的类型。事件侦听器可以通过继承的 type 属性访问此信息。
          * @param bubbles {boolean} 确定 Event 对象是否冒泡。事件侦听器可以通过继承的 bubbles 属性访问此信息。
@@ -56,8 +57,8 @@ var egret;
         /**
          * 使用指定的EventDispatcher对象来抛出Event事件对象。抛出的对象将会缓存在对象池上，供下次循环复用。
          * @method egret.TimerEvent.dispatchTimerEvent
-         * @param target {egret.IEventDispatcher}
-         * @param type {string}
+         * @param target {egret.IEventDispatcher} 派发事件目标
+         * @param type {string} 事件类型
          */
         TimerEvent.dispatchTimerEvent = function (target, type) {
             var eventClass = TimerEvent;

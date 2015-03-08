@@ -60,6 +60,7 @@ var egret;
                 get: function () {
                     if (!this._graphics) {
                         this._graphics = new egret.Graphics();
+                        this.needDraw = true;
                     }
                     return this._graphics;
                 },
@@ -182,6 +183,7 @@ var egret;
                 return bounds;
             };
             /**
+             * 绘制对象和/或设置其子项的大小和位置
              * @method egret.gui.Rect#updateDisplayList
              * @param unscaledWidth {number}
              * @param unscaledHeight {number}
@@ -196,6 +198,24 @@ var egret;
                 }
                 g.drawRect(0, 0, unscaledWidth, unscaledHeight);
                 g.endFill();
+            };
+            /**
+             * 碰撞检测
+             * @param x
+             * @param y
+             * @param ignoreTouchEnabled
+             * @returns {*}
+             */
+            Rect.prototype.hitTest = function (x, y, ignoreTouchEnabled) {
+                if (ignoreTouchEnabled === void 0) { ignoreTouchEnabled = false; }
+                var result = _super.prototype.hitTest.call(this, x, y, ignoreTouchEnabled);
+                if (result) {
+                    return result;
+                }
+                else if (this._graphics) {
+                    return egret.DisplayObject.prototype.hitTest.call(this, x, y, ignoreTouchEnabled);
+                }
+                return null;
             };
             return Rect;
         })(gui.UIComponent);

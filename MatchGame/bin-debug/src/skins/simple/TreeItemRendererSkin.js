@@ -16,12 +16,9 @@ var skins;
                 this.minHeight = 22;
                 this.elementsContent = [this.contentGroup_i()];
                 this.states = [
-                    new egret.gui.State("up", [
-                    ]),
-                    new egret.gui.State("down", [
-                    ]),
-                    new egret.gui.State("disabled", [
-                    ])
+                    new egret.gui.State("up", []),
+                    new egret.gui.State("down", []),
+                    new egret.gui.State("disabled", [])
                 ];
             }
             Object.defineProperty(TreeItemRendererSkin.prototype, "skinParts", {

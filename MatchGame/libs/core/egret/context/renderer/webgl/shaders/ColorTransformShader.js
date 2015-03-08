@@ -32,6 +32,9 @@ var __extends = this.__extends || function (d, b) {
  */
 var egret;
 (function (egret) {
+    /**
+     * @private
+     */
     var ColorTransformShader = (function (_super) {
         __extends(ColorTransformShader, _super);
         function ColorTransformShader(gl) {

@@ -16,10 +16,8 @@ var skins;
                 this.__s(this, ["minHeight", "minWidth"], [10, 10]);
                 this.elementsContent = [this.track_i(), this.thumb_i()];
                 this.states = [
-                    new egret.gui.State("normal", [
-                    ]),
-                    new egret.gui.State("disabled", [
-                    ])
+                    new egret.gui.State("normal", []),
+                    new egret.gui.State("disabled", [])
                 ];
             }
             Object.defineProperty(VScrollBarSkin.prototype, "skinParts", {

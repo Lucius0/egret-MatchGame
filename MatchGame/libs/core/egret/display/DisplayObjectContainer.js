@@ -38,13 +38,18 @@ var egret;
      * @classdesc
      * DisplayObjectContainer 类是可用作显示列表中显示对象容器的所有对象的基类。
      * 该显示列表管理运行时中显示的所有对象。使用 DisplayObjectContainer 类排列显示列表中的显示对象。每个 DisplayObjectContainer 对象都有自己的子级列表，用于组织对象的 Z 轴顺序。Z 轴顺序是由前至后的顺序，可确定哪个对象绘制在前，哪个对象绘制在后等。
+     * @link http://docs.egret-labs.org/post/manual/displaycon/aboutdisplaycon.html 显示容器的概念与实现
      */
     var DisplayObjectContainer = (function (_super) {
         __extends(DisplayObjectContainer, _super);
+        /**
+         * 创建一个 egret.DisplayObjectContainer 对象
+         */
         function DisplayObjectContainer() {
             _super.call(this);
             this._touchChildren = true;
             this._children = [];
+            this._isContainer = true;
         }
         Object.defineProperty(DisplayObjectContainer.prototype, "touchChildren", {
             /**
@@ -84,7 +89,7 @@ var egret;
         DisplayObjectContainer.prototype.doSetChildIndex = function (child, index) {
             var lastIdx = this._children.indexOf(child);
             if (lastIdx < 0) {
-                egret.Logger.fatal("child不在当前容器内");
+                egret.Logger.fatalWithErrorId(1006);
             }
             //从原来的位置删除
             this._children.splice(lastIdx, 1);
@@ -123,7 +128,7 @@ var egret;
             if (child == this)
                 return child;
             if (index < 0 || index > this._children.length) {
-                egret.Logger.fatal("提供的索引超出范围");
+                egret.Logger.fatalWithErrorId(1007);
                 return child;
             }
             var host = child._parent;
@@ -146,7 +151,9 @@ var egret;
                 var list = DisplayObjectContainer.__EVENT__ADD_TO_STAGE_LIST;
                 while (list.length > 0) {
                     var childAddToStage = list.shift();
-                    childAddToStage.dispatchEventWith(egret.Event.ADDED_TO_STAGE);
+                    if (notifyListeners) {
+                        childAddToStage.dispatchEventWith(egret.Event.ADDED_TO_STAGE);
+                    }
                 }
             }
             child._setDirty();
@@ -165,7 +172,7 @@ var egret;
                 return this._doRemoveChild(index);
             }
             else {
-                egret.Logger.fatal("child未被addChild到该parent");
+                egret.Logger.fatalWithErrorId(1008);
                 return null;
             }
         };
@@ -180,7 +187,7 @@ var egret;
                 return this._doRemoveChild(index);
             }
             else {
-                egret.Logger.fatal("提供的索引超出范围");
+                egret.Logger.fatalWithErrorId(1007);
                 return null;
             }
         };
@@ -188,14 +195,17 @@ var egret;
             if (notifyListeners === void 0) { notifyListeners = true; }
             var locChildren = this._children;
             var child = locChildren[index];
-            if (notifyListeners)
+            if (notifyListeners) {
                 child.dispatchEventWith(egret.Event.REMOVED, true);
+            }
             if (this._stage) {
                 child._onRemoveFromStage();
                 var list = DisplayObjectContainer.__EVENT__REMOVE_FROM_STAGE_LIST;
                 while (list.length > 0) {
                     var childAddToStage = list.shift();
-                    childAddToStage.dispatchEventWith(egret.Event.REMOVED_FROM_STAGE);
+                    if (notifyListeners) {
+                        childAddToStage.dispatchEventWith(egret.Event.REMOVED_FROM_STAGE);
+                    }
                     childAddToStage._stage = null;
                 }
             }
@@ -215,7 +225,7 @@ var egret;
                 return this._children[index];
             }
             else {
-                egret.Logger.fatal("提供的索引超出范围");
+                egret.Logger.fatalWithErrorId(1007);
                 return null;
             }
         };
@@ -245,7 +255,7 @@ var egret;
                 this._swapChildrenAt(index1, index2);
             }
             else {
-                egret.Logger.fatal("提供的索引超出范围");
+                egret.Logger.fatalWithErrorId(1007);
             }
         };
         /**
@@ -258,7 +268,7 @@ var egret;
             var index1 = this._children.indexOf(child1);
             var index2 = this._children.indexOf(child2);
             if (index1 == -1 || index2 == -1) {
-                egret.Logger.fatal("child未被addChild到该parent");
+                egret.Logger.fatalWithErrorId(1008);
             }
             else {
                 this._swapChildrenAt(index1, index2);
@@ -293,19 +303,43 @@ var egret;
             }
         };
         DisplayObjectContainer.prototype._updateTransform = function () {
-            if (!this._visible) {
+            var o = this;
+            if (!o._visible) {
                 return;
             }
+            if (o._filter) {
+                egret.RenderCommand.push(this._setGlobalFilter, this);
+            }
+            if (o._colorTransform) {
+                egret.RenderCommand.push(this._setGlobalColorTransform, this);
+            }
+            var mask = o.mask || o._scrollRect;
+            if (mask) {
+                egret.RenderCommand.push(this._pushMask, this);
+            }
             _super.prototype._updateTransform.call(this);
-            for (var i = 0, length = this._children.length; i < length; i++) {
-                var child = this._children[i];
-                child._updateTransform();
+            if (!this["_cacheAsBitmap"] || !this._texture_to_render) {
+                for (var i = 0, length = o._children.length; i < length; i++) {
+                    var child = o._children[i];
+                    child._updateTransform();
+                }
+            }
+            if (mask) {
+                egret.RenderCommand.push(this._popMask, this);
+            }
+            if (o._colorTransform) {
+                egret.RenderCommand.push(this._removeGlobalColorTransform, this);
+            }
+            if (o._filter) {
+                egret.RenderCommand.push(this._removeGlobalFilter, this);
             }
         };
         DisplayObjectContainer.prototype._render = function (renderContext) {
-            for (var i = 0, length = this._children.length; i < length; i++) {
-                var child = this._children[i];
-                child._draw(renderContext);
+            if (!egret.MainContext.__use_new_draw) {
+                for (var i = 0, length = this._children.length; i < length; i++) {
+                    var child = this._children[i];
+                    child._draw(renderContext);
+                }
             }
         };
         /**
@@ -395,7 +429,7 @@ var egret;
             if (result) {
                 return result;
             }
-            else if (this._texture_to_render || this["graphics"]) {
+            else if (this._texture_to_render) {
                 return _super.prototype.hitTest.call(this, x, y, ignoreTouchEnabled);
             }
             return null;

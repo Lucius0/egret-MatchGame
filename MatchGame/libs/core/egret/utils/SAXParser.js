@@ -34,6 +34,7 @@ var egret;
 (function (egret) {
     /**
      * @deprecated
+     * @private
      */
     var SAXParser = (function (_super) {
         __extends(SAXParser, _super);
@@ -81,7 +82,7 @@ var egret;
                 xmlDoc.loadXML(textxml);
             }
             if (xmlDoc == null) {
-                egret.Logger.info("xml not found!");
+                egret.Logger.infoWithErrorId(1015);
             }
             return xmlDoc;
         };

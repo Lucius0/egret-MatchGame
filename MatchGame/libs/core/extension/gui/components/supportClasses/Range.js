@@ -189,6 +189,7 @@ var egret;
                 configurable: true
             });
             /**
+             * 处理对组件设置的属性
              * @method egret.gui.Range#commitProperties
              */
             Range.prototype.commitProperties = function () {

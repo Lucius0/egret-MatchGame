@@ -109,6 +109,7 @@ var egret;
                 configurable: true
             });
             /**
+             * [覆盖] 添加外观部件时调用
              * @param partName {string}
              * @param instance {any}
              */
@@ -123,6 +124,7 @@ var egret;
                 }
             };
             /**
+             * [覆盖] 正删除外观部件的实例时调用
              * @method egret.gui.TitleWindow#partRemoved
              * @param partName {string}
              * @param instance {any}

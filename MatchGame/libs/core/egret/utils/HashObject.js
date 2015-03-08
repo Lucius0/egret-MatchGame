@@ -36,6 +36,7 @@ var egret;
      */
     var HashObject = (function () {
         /**
+         * 创建一个 egret.HashObject 对象
          * @method egret.HashObject#constructor
          */
         function HashObject() {

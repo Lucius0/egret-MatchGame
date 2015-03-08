@@ -453,6 +453,9 @@ var egret;
                     this.target.invalidateDisplayList();
                 }
             };
+            /**
+             * 基于目标的内容测量其默认大小，并（可选）测量目标的默认最小大小
+             */
             TileLayout.prototype.measure = function () {
                 if (!this.target)
                     return;
@@ -614,6 +617,7 @@ var egret;
                 }
             };
             /**
+             * 如果 useVirtualLayout 为 true，则当布局目标改变时，布局目标可以使用此方法来清除已缓存布局信息
              * @method egret.gui.TileLayout#clearVirtualLayoutCache
              */
             TileLayout.prototype.clearVirtualLayoutCache = function () {
@@ -621,6 +625,9 @@ var egret;
                 this.maxElementWidth = 0;
                 this.maxElementHeight = 0;
             };
+            /**
+             * verticalScrollPosition 或 horizontalScrollPosition 属性更改时调用
+             */
             TileLayout.prototype.scrollPositionChanged = function () {
                 _super.prototype.scrollPositionChanged.call(this);
                 if (this.useVirtualLayout) {
@@ -695,6 +702,7 @@ var egret;
                 return this.startIndex != oldStartIndex || this.endIndex != oldEndIndex;
             };
             /**
+             * 调整目标的元素的大小并定位这些元素
              * @param width {number}
              * @param height {number}
              */

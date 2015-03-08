@@ -16,8 +16,7 @@ var skins;
                 this.minHeight = 22;
                 this.elementsContent = [this.__7_i()];
                 this.states = [
-                    new egret.gui.State("up", [
-                    ]),
+                    new egret.gui.State("up", []),
                     new egret.gui.State("down", [
                         new egret.gui.SetProperty("__7", "source", "tree_btndown_png")
                     ]),

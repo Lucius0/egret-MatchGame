@@ -9,7 +9,6 @@ var Card = (function (_super) {
     function Card() {
         _super.call(this);
         this.isFlipping = false;
-        this.touchEnabled = true;
         //var data = RES.getRes("card_json");
         //var texture = RES.getRes("card_png");
         //var mcDataFactory = new egret.MovieClipDataFactory(data, texture);

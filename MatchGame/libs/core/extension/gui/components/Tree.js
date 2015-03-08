@@ -56,6 +56,7 @@ var egret;
                 this._iconFunction = null;
             }
             /**
+             * 创建该容器的子元素对象
              * @method egret.gui.Tree#createChildren
              */
             Tree.prototype.createChildren = function () {
@@ -64,6 +65,7 @@ var egret;
                 _super.prototype.createChildren.call(this);
             };
             /**
+             * 更新项呈示器，以备使用或重用
              * @method egret.gui.Tree#updateRenderer
              * @param renderer {IItemRenderer}
              * @param itemIndex {number}
@@ -219,6 +221,7 @@ var egret;
                 }
             };
             /**
+             * 处理对组件设置的属性
              * @method egret.gui.Tree#commitProperties
              */
             Tree.prototype.commitProperties = function () {

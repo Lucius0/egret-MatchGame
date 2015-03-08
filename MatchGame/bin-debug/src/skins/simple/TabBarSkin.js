@@ -16,10 +16,8 @@ var skins;
                 this.__s(this, ["minHeight", "minWidth"], [20, 60]);
                 this.elementsContent = [this.dataGroup_i()];
                 this.states = [
-                    new egret.gui.State("normal", [
-                    ]),
-                    new egret.gui.State("disabled", [
-                    ])
+                    new egret.gui.State("normal", []),
+                    new egret.gui.State("disabled", [])
                 ];
             }
             Object.defineProperty(TabBarSkin.prototype, "skinParts", {

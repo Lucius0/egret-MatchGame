@@ -96,7 +96,7 @@ var RES;
                             group.push(item);
                     }
                     else {
-                        egret.Logger.warning("RES.createGroup()传入了配置中不存在的键值:" + key);
+                        egret.Logger.warningWithErrorId(2000, key);
                     }
                 }
             }

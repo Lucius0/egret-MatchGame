@@ -35,25 +35,20 @@ var egret;
     /**
      * @class egret.Bitmap
      * @classdesc
-     * Bitmap 类表示用于表示位图图像的显示对象。
+     * Bitmap 类表示用于表示位图图像的显示对象。这些图像可以是使用 Bitmap() 构造函数创建的图像。
+     * 利用 Bitmap() 构造函数，可以创建包含对 Texture 对象的引用的 Bitmap 对象。创建了 Bitmap 对象后，使用父 DisplayObjectContainer 实例的 addChild() 或 addChildAt() 方法将位图放在显示列表中。
+     * 一个 Bitmap 对象可在若干 Bitmap 对象之中共享其 Texture 引用，与转换属性或旋转属性无关。由于能够创建引用相同 Texture 对象的多个 Bitmap 对象，因此，多个显示对象可以使用相同的复杂 Texture 对象，而不会因为每个显示对象实例使用一个 Texture 对象而产生内存开销。
+     * @link http://docs.egret-labs.org/post/manual/bitmap/createbitmap.html 创建位图
      * @extends egret.DisplayObject
      */
     var Bitmap = (function (_super) {
         __extends(Bitmap, _super);
+        /**
+         * 初始化 Bitmap 对象以引用指定的 Texture 对象
+         * @param texture {Texture} 纹理
+         */
         function Bitmap(texture) {
             _super.call(this);
-            /**
-             * 单个Bitmap是否开启DEBUG模式
-             * @member {boolean} egret.Bitmap#debug
-             * @private
-             */
-            this.debug = false;
-            /**
-             * debug边框颜色，默认值为红色
-             * @member {number} egret.Bitmap#debugColor
-             * @private
-             */
-            this.debugColor = 0xff0000;
             this._texture = null;
             /**
              * 矩形区域，它定义位图对象的九个缩放区域。此属性仅当fillMode为BitmapFillMode.SCALE时有效。
@@ -72,6 +67,7 @@ var egret;
                 this._texture = texture;
                 this._setSizeDirty();
             }
+            this.needDraw = true;
         }
         Object.defineProperty(Bitmap.prototype, "texture", {
             /**
@@ -160,20 +156,23 @@ var egret;
             if (!texture || !scale9Grid) {
                 return;
             }
-            var renderFilter = egret.RenderFilter.getInstance();
             var textureWidth = texture._textureWidth;
             var textureHeight = texture._textureHeight;
             var sourceX = texture._bitmapX;
             var sourceY = texture._bitmapY;
             var sourceWidth = texture._bitmapWidth || textureWidth;
             var sourceHeight = texture._bitmapHeight || textureHeight;
+            destWidth -= textureWidth - sourceWidth;
+            destHeight -= textureHeight - sourceHeight;
+            if (renderContext.drawImageScale9(texture, sourceX, sourceY, sourceWidth, sourceHeight, texture._offsetX, texture._offsetY, destWidth, destHeight, scale9Grid)) {
+                return;
+            }
             var destX = texture._offsetX / texture_scale_factor;
             var destY = texture._offsetY / texture_scale_factor;
+            var renderFilter = egret.RenderFilter.getInstance();
             var s9g = egret.Rectangle.identity.initialize(scale9Grid.x - Math.round(destX), scale9Grid.y - Math.round(destX), scale9Grid.width, scale9Grid.height);
             var roundedDrawX = Math.round(destX);
             var roundedDrawY = Math.round(destY);
-            destWidth -= textureWidth - sourceWidth;
-            destHeight -= textureHeight - sourceHeight;
             //防止空心的情况出现。
             if (s9g.y == s9g.bottom) {
                 if (s9g.bottom < sourceHeight)
@@ -217,18 +216,13 @@ var egret;
             if (!texture) {
                 return _super.prototype._measureBounds.call(this);
             }
-            var x = texture._offsetX;
-            var y = texture._offsetY;
+            //点击区域要包含原图中得透明区域，所以xy均返回0
+            var x = 0; //texture._offsetX;
+            var y = 0; //texture._offsetY;
             var w = texture._textureWidth;
             var h = texture._textureHeight;
             return egret.Rectangle.identity.initialize(x, y, w, h);
         };
-        /**
-         * 全部Bitmap是否开启DEBUG模式
-         * @member {boolean} egret.Bitmap.debug
-         * @private
-         */
-        Bitmap.debug = false;
         Bitmap.renderFilter = egret.RenderFilter.getInstance();
         return Bitmap;
     })(egret.DisplayObject);

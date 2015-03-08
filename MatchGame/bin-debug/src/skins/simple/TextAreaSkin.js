@@ -16,8 +16,7 @@ var skins;
                 this.__s(this, ["minHeight", "minWidth"], [30, 100]);
                 this.elementsContent = [this.__3_i(), this.textDisplay_i()];
                 this.states = [
-                    new egret.gui.State("normal", [
-                    ]),
+                    new egret.gui.State("normal", []),
                     new egret.gui.State("disabled", [
                         new egret.gui.SetProperty("textDisplay", "textColor", 0xAAAAAA)
                     ])

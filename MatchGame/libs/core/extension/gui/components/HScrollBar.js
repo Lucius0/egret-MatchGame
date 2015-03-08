@@ -34,12 +34,23 @@ var egret;
 (function (egret) {
     var gui;
     (function (gui) {
+        /**
+         *  @classdesc
+         * HScrollBar（水平 ScrollBar）控件可以在因数据太多而不能在显示区域中以水平方向完全显示时控制显示的数据部分。
+         尽管可以使用 HScrollBar 控件作为独立控件，但通常将其结合作为另一组组件的一部分来提供滚动功能
+         */
         var HScrollBar = (function (_super) {
             __extends(HScrollBar, _super);
             function HScrollBar() {
                 _super.apply(this, arguments);
                 this._thumbLengthRatio = 1;
             }
+            /**
+             *
+             * @param width
+             * @param contentWidth
+             * @private
+             */
             HScrollBar.prototype._setViewportMetric = function (width, contentWidth) {
                 var max = Math.max(0, contentWidth - width);
                 this._setMaximun(max);
@@ -51,7 +62,7 @@ var egret;
                     return 1;
                 },
                 set: function (value) {
-                    egret.Logger.warning("HScrollBar.trackAlpha已经废弃");
+                    egret.Logger.warningWithErrorId(1016, "HScrollBar.trackAlpha");
                 },
                 enumerable: true,
                 configurable: true
@@ -61,7 +72,7 @@ var egret;
                     return 1;
                 },
                 set: function (value) {
-                    egret.Logger.warning("HScrollBar.thumbAlpha已经废弃");
+                    egret.Logger.warningWithErrorId(1016, "HScrollBar.thumbAlpha");
                 },
                 enumerable: true,
                 configurable: true
@@ -72,18 +83,35 @@ var egret;
             HScrollBar.prototype.getPosition = function () {
                 return this._getValue();
             };
+            /**
+             *
+             * @param value
+             * @private
+             */
             HScrollBar.prototype._setValue = function (value) {
                 value = Math.max(0, value);
                 _super.prototype._setValue.call(this, value);
             };
+            /**
+             * [覆盖] 更新 value 属性，并且如果 viewport 为非 null，则将其 horizontalScrollPosition 设置为 value
+             * @param value
+             */
             HScrollBar.prototype.setValue = function (value) {
                 _super.prototype.setValue.call(this, value);
             };
+            /**
+             *
+             * @param animation
+             * @private
+             */
             HScrollBar.prototype._animationUpdateHandler = function (animation) {
                 this.pendingValue = animation.currentValue["value"];
                 this.value = animation.currentValue["value"];
                 this.dispatchEventWith(egret.Event.CHANGE);
             };
+            /**
+             * 设置外观部件的边界，这些外观部件的几何图形不是完全由外观的布局指定的
+             */
             HScrollBar.prototype.updateSkinDisplayList = function () {
                 if (!this.thumb || !this.track)
                     return;

@@ -35,7 +35,8 @@ var egret;
     /**
      * @class egret.MovieClip
      * @classdesc 影片剪辑，可以通过影片剪辑播放序列帧动画。MovieClip 类从以下类继承而来：DisplayObject 和 EventDispatcher。不同于 DisplayObject 对象，MovieClip 对象拥有一个时间轴。
-     * @extends egret.DisplayObjectContainer
+     * @extends egret.DisplayObject
+     * @link http://docs.egret-labs.org/post/manual/displaycon/movieclip.html  MovieClip序列帧动画
      */
     var MovieClip = (function (_super) {
         __extends(MovieClip, _super);
@@ -65,6 +66,7 @@ var egret;
             this._displayedKeyFrameNum = 0;
             this._passedTime = 0;
             this._setMovieClipData(movieClipData);
+            this.needDraw = true;
         }
         MovieClip.prototype._init = function () {
             this._reset();
@@ -106,6 +108,17 @@ var egret;
                 var destH = Math.round(bitmapHeight);
                 MovieClip.renderFilter.drawImage(renderContext, this, texture._bitmapX, texture._bitmapY, bitmapWidth, bitmapHeight, offsetX, offsetY, destW, destH);
             }
+        };
+        MovieClip.prototype._measureBounds = function () {
+            var texture = this._textureToRender;
+            if (!texture) {
+                return _super.prototype._measureBounds.call(this);
+            }
+            var x = texture._offsetX;
+            var y = texture._offsetY;
+            var w = texture._textureWidth;
+            var h = texture._textureHeight;
+            return egret.Rectangle.identity.initialize(x, y, w, h);
         };
         MovieClip.prototype._onAddToStage = function () {
             _super.prototype._onAddToStage.call(this);
@@ -229,7 +242,7 @@ var egret;
         MovieClip.prototype.gotoAndPlay = function (frame, playTimes) {
             if (playTimes === void 0) { playTimes = 0; }
             if (arguments.length === 0 || arguments.length > 2) {
-                throw new Error("MovieClip.gotoAndPlay() ArgumentError");
+                throw new Error(egret.getString(1022, "MovieClip.gotoAndPlay()"));
             }
             this.play(playTimes);
             this._gotoFrame(frame);
@@ -241,7 +254,7 @@ var egret;
          */
         MovieClip.prototype.gotoAndStop = function (frame) {
             if (arguments.length != 1) {
-                throw new Error("MovieClip.gotoAndStop() ArgumentError");
+                throw new Error(egret.getString(1022, "MovieClip.gotoAndStop()"));
             }
             this.stop();
             this._gotoFrame(frame);
@@ -254,7 +267,7 @@ var egret;
             else {
                 frameNum = parseInt(frame + '', 10);
                 if (frameNum != frame) {
-                    throw new Error("Frame Label Not Found ArgumentError");
+                    throw new Error(egret.getString(1022, "Frame Label Not Found"));
                 }
             }
             if (frameNum < 1) {
@@ -426,7 +439,7 @@ var egret;
             },
             /**
              * MovieClip数据源
-             * @member {any} egret.MovieClip#dataSource
+             * @member {any} egret.MovieClip#movieClipData
              */
             set: function (value) {
                 this._setMovieClipData(value);

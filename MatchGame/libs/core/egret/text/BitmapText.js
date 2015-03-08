@@ -40,6 +40,9 @@ var egret;
      */
     var BitmapText = (function (_super) {
         __extends(BitmapText, _super);
+        /**
+         * 创建一个 egret.BitmapText 对象
+         */
         function BitmapText() {
             _super.call(this);
             /**
@@ -51,9 +54,12 @@ var egret;
             this._fontChanged = false;
             this._textWidth = 0;
             this._textHeight = 0;
+            this._textOffsetX = 0;
+            this._textOffsetY = 0;
             this.textLinesChange = true;
             this._lineHeights = [];
             this.cacheAsBitmap = true;
+            this.needDraw = true;
         }
         Object.defineProperty(BitmapText.prototype, "text", {
             /**
@@ -92,20 +98,6 @@ var egret;
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(BitmapText.prototype, "spriteSheet", {
-            /**
-             * @deprecated
-             * 此属性已经废弃，请使用BitmapText.font属性代替。
-             */
-            get: function () {
-                return this._font;
-            },
-            set: function (value) {
-                this.font = value;
-            },
-            enumerable: true,
-            configurable: true
-        });
         BitmapText.prototype._setSizeDirty = function () {
             _super.prototype._setSizeDirty.call(this);
             this.textLinesChange = true;
@@ -138,7 +130,7 @@ var egret;
                             xPos += emptyWidth;
                         }
                         else {
-                            egret.Logger.warning("BitmapText找不到文字所对应的纹理：\"" + character + "\"");
+                            egret.Logger.warningWithErrorId(1011, character);
                         }
                         continue;
                     }
@@ -157,7 +149,7 @@ var egret;
             if (lines.length == 0) {
                 return egret.Rectangle.identity.initialize(0, 0, 0, 0);
             }
-            return egret.Rectangle.identity.initialize(0, 0, this._textWidth, this._textHeight);
+            return egret.Rectangle.identity.initialize(this._textOffsetX, this._textOffsetY, this._textWidth - this._textOffsetX, this._textHeight - this._textOffsetY);
         };
         BitmapText.prototype.getTextLines = function () {
             if (!this.textLinesChange) {
@@ -173,6 +165,8 @@ var egret;
             }
             var textWidth = 0;
             var textHeight = 0;
+            var textStartX = 0;
+            var textStartY = 0;
             var hasWidthSet = this._hasWidthSet;
             var maxWidth = this._hasWidthSet ? this._explicitWidth : Number.POSITIVE_INFINITY;
             var bitmapFont = this._font;
@@ -181,15 +175,19 @@ var egret;
             var text = this._text;
             var textArr = text.split(/(?:\r\n|\r|\n)/);
             var length = textArr.length;
+            var isFirstLine = true;
             for (var i = 0; i < length; i++) {
                 var line = textArr[i];
                 var len = line.length;
                 var lineHeight = 0;
                 var xPos = 0;
+                var isFistChar = true;
                 for (var j = 0; j < len; j++) {
                     var character = line.charAt(j);
                     var texureWidth;
                     var textureHeight;
+                    var offsetX = 0;
+                    var offsetY = 0;
                     var texture = bitmapFont.getTexture(character);
                     if (!texture) {
                         if (character == " ") {
@@ -197,13 +195,25 @@ var egret;
                             textureHeight = emptyHeight;
                         }
                         else {
-                            egret.Logger.warning("BitmapText找不到文字所对应的纹理：\"" + character + "\"");
+                            egret.Logger.warningWithErrorId(1011, character);
+                            if (isFistChar) {
+                                isFistChar = false;
+                            }
                             continue;
                         }
                     }
                     else {
                         texureWidth = texture._textureWidth;
                         textureHeight = texture._textureHeight;
+                        offsetX = texture._offsetX;
+                        offsetY = texture._offsetY;
+                    }
+                    if (isFistChar) {
+                        isFistChar = false;
+                        textStartX = Math.min(offsetX, textStartX);
+                    }
+                    if (isFirstLine) {
+                        textStartY = Math.min(offsetY, textStartY);
                     }
                     if (hasWidthSet && j > 0 && xPos + texureWidth > maxWidth) {
                         textLines.push(line.substring(0, j));
@@ -220,6 +230,9 @@ var egret;
                     xPos += texureWidth;
                     lineHeight = Math.max(textureHeight, lineHeight);
                 }
+                if (isFirstLine) {
+                    isFirstLine = false;
+                }
                 textLines.push(line);
                 lineHeights.push(lineHeight);
                 textHeight += lineHeight;
@@ -227,6 +240,8 @@ var egret;
             }
             this._textWidth = textWidth;
             this._textHeight = textHeight;
+            this._textOffsetX = textStartX;
+            this._textOffsetY = textStartY;
             return textLines;
         };
         BitmapText.EMPTY_FACTOR = 0.33;

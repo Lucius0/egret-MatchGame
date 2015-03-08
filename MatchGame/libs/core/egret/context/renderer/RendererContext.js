@@ -109,6 +109,25 @@ var egret;
             this.profiler.onDrawImage();
         };
         /**
+         * 绘制9宫图片
+         * @method egret.RendererContext#drawImageScale9
+         * @param texture {Texture}
+         * @param sourceX {any}
+         * @param sourceY {any}
+         * @param sourceWidth {any}
+         * @param sourceHeight {any}
+         * @param destX {any}
+         * @param destY {any}
+         * @param destWidth {any}
+         * @param destHeigh {any}
+         */
+        RendererContext.prototype.drawImageScale9 = function (texture, sourceX, sourceY, sourceWidth, sourceHeight, offX, offY, destWidth, destHeight, rect) {
+            return false;
+        };
+        RendererContext.prototype._addOneDraw = function () {
+            this.profiler.onDrawImage();
+        };
+        /**
          * 变换Context的当前渲染矩阵
          * @method egret.RendererContext#setTransform
          * @param matrix {egret.Matri}
@@ -166,25 +185,31 @@ var egret;
         };
         RendererContext.prototype.setGlobalColorTransform = function (colorTransformMatrix) {
         };
+        RendererContext.prototype.setGlobalFilter = function (filterData) {
+        };
         RendererContext.createRendererContext = function (canvas) {
             return null;
         };
         RendererContext.deleteTexture = function (texture) {
             var context = egret.MainContext.instance.rendererContext;
             var gl = context["gl"];
-            var webGLTexture = texture.webGLTexture;
-            if (webGLTexture && gl) {
-                for (var key in webGLTexture) {
-                    var glTexture = webGLTexture[key];
-                    gl.deleteTexture(glTexture);
+            var bitmapData = texture._bitmapData;
+            if (bitmapData) {
+                var webGLTexture = bitmapData.webGLTexture;
+                if (webGLTexture && gl) {
+                    for (var key in webGLTexture) {
+                        var glTexture = webGLTexture[key];
+                        gl.deleteTexture(glTexture);
+                    }
                 }
+                bitmapData.webGLTexture = null;
             }
-            texture.webGLTexture = null;
         };
         RendererContext.initBlendMode = function () {
             RendererContext.blendModesForGL = {};
             RendererContext.blendModesForGL[egret.BlendMode.NORMAL] = [1, 771];
             RendererContext.blendModesForGL[egret.BlendMode.ADD] = [770, 1];
+            RendererContext.blendModesForGL[egret.BlendMode.ERASE] = [0, 770];
         };
         /**
          * 设置 gl 模式下的blendMode，canvas模式下不会生效
@@ -196,7 +221,7 @@ var egret;
          */
         RendererContext.registerBlendModeForGL = function (key, src, dst, override) {
             if (RendererContext.blendModesForGL[key] && !override) {
-                egret.Logger.warning("设置了已经存在的blendMode：" + key);
+                egret.Logger.warningWithErrorId(1005, key);
             }
             else {
                 RendererContext.blendModesForGL[key] = [src, dst];

@@ -228,6 +228,7 @@ var egret;
                 }
             };
             /**
+             * 基于目标的内容测量其默认大小，并（可选）测量目标的默认最小大小
              * @method egret.gui.HorizontalLayout#measure
              */
             HorizontalLayout.prototype.measure = function () {
@@ -305,6 +306,7 @@ var egret;
                 this.target.measuredHeight = Math.ceil(measuredHeight + vPadding);
             };
             /**
+             * 调整目标的元素的大小并定位这些元素
              * @method egret.gui.HorizontalLayout#updateDisplayList
              * @param width {number}
              * @param height {number}
@@ -392,6 +394,9 @@ var egret;
                 _super.prototype.elementRemoved.call(this, index);
                 this.elementSizeTable.splice(index, 1);
             };
+            /**
+             * 如果 useVirtualLayout 为 true，则当布局目标改变时，布局目标可以使用此方法来清除已缓存布局信息
+             */
             HorizontalLayout.prototype.clearVirtualLayoutCache = function () {
                 if (!this.useVirtualLayout)
                     return;
@@ -417,6 +422,7 @@ var egret;
                     return this.findIndexAt(x, Math.min(index + 1, i1), i1);
             };
             /**
+             * verticalScrollPosition 或 horizontalScrollPosition 属性更改时调用
              * @method egret.gui.HorizontalLayout#scrollPositionChanged
              */
             HorizontalLayout.prototype.scrollPositionChanged = function () {

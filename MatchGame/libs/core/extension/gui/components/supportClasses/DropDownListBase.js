@@ -134,6 +134,7 @@ var egret;
                 configurable: true
             });
             /**
+             * 处理对组件设置的属性
              * @method egret.gui.DropDownListBase#commitProperties
              */
             DropDownListBase.prototype.commitProperties = function () {
@@ -144,6 +145,7 @@ var egret;
                 }
             };
             /**
+             * 添加外观部件时调用
              * @method egret.gui.DropDownListBase#partAdded
              * @param partName {string}
              * @param instance {any}
@@ -159,6 +161,7 @@ var egret;
                 }
             };
             /**
+             * 正删除外观部件的实例时调用
              * @method egret.gui.DropDownListBase#partRemoved
              * @param partName {string}
              * @param instance {any}
@@ -173,6 +176,7 @@ var egret;
                 _super.prototype.partRemoved.call(this, partName, instance);
             };
             /**
+             * 返回要应用到外观的状态的名称
              * @method egret.gui.DropDownListBase#getCurrentSkinState
              * @returns {string}
              */
@@ -241,9 +245,11 @@ var egret;
              * @method egret.gui.DropDownListBase#item_mouseDownHandler
              * @param event {TouchEvent}
              */
-            DropDownListBase.prototype.item_mouseDownHandler = function (event) {
-                _super.prototype.item_mouseDownHandler.call(this, event);
+            DropDownListBase.prototype._item_touchEndHandler = function (event) {
+                _super.prototype._item_touchEndHandler.call(this, event);
                 var itemRenderer = (event.currentTarget);
+                if (itemRenderer != this._mouseDownItemRenderer)
+                    return;
                 this._dispatchListEvent(event, gui.ListEvent.ITEM_CLICK, itemRenderer);
                 this._userProposedSelectedIndex = this.selectedIndex;
                 this.closeDropDown(true);

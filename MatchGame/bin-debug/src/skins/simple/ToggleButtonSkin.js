@@ -16,8 +16,7 @@ var skins;
                 this.__s(this, ["height", "minWidth"], [60, 140]);
                 this.elementsContent = [this.__7_i(), this.__9_i()];
                 this.states = [
-                    new egret.gui.State("up", [
-                    ]),
+                    new egret.gui.State("up", []),
                     new egret.gui.State("down", [
                         new egret.gui.SetProperty("__7", "source", "togglebutton_over_png"),
                         new egret.gui.SetProperty("labelDisplay", "textColor", 0x1e7465)

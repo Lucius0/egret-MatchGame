@@ -59,6 +59,7 @@ var egret;
                 this._elementsContent = [];
             }
             /**
+             * 创建子对象
              * @method egret.gui.Group#createChildren
              */
             Group.prototype.createChildren = function () {
@@ -120,6 +121,7 @@ var egret;
             };
             Object.defineProperty(Group.prototype, "numElements", {
                 /**
+                 * 获得容器中的子对象数
                  * @member egret.gui.Group#numElements
                  */
                 get: function () {
@@ -129,6 +131,7 @@ var egret;
                 configurable: true
             });
             /**
+             * 返回指定索引处的可视元素
              * @method egret.gui.Group#getElementAt
              * @param index {number}
              * @returns {IVisualElement}
@@ -143,9 +146,10 @@ var egret;
                 if (addingElement)
                     maxIndex++;
                 if (index < 0 || index > maxIndex)
-                    throw new RangeError("索引:\"" + index + "\"超出可视元素索引范围");
+                    throw new RangeError(egret.getString(3011, index));
             };
             /**
+             * 将可视元素添加到此容器中
              * @method egret.gui.Group#addElement
              * @param element {IVisualElement}
              * @returns {IVisualElement}
@@ -157,6 +161,7 @@ var egret;
                 return this.addElementAt(element, index);
             };
             /**
+             * 将可视元素添加到此容器中
              * @method egret.gui.Group#addElementAt
              * @param element {IVisualElement}
              * @param index {number}
@@ -180,6 +185,7 @@ var egret;
                 return element;
             };
             /**
+             * 从此容器的子列表中删除指定的可视元素
              * @method egret.gui.Group#removeElement
              * @param element {IVisualElement}
              * @returns {IVisualElement}
@@ -188,6 +194,7 @@ var egret;
                 return this.removeElementAt(this.getElementIndex(element));
             };
             /**
+             * 从容器中的指定索引位置删除可视元素
              * @method egret.gui.Group#removeElementAt
              * @param index {number}
              * @returns {IVisualElement}
@@ -201,6 +208,7 @@ var egret;
                 return element;
             };
             /**
+             * 删除容器中的所有子元素
              * @method egret.gui.Group#removeAllElements
              */
             Group.prototype.removeAllElements = function () {
@@ -209,6 +217,7 @@ var egret;
                 }
             };
             /**
+             * 返回可视元素的索引位置
              * @method egret.gui.Group#getElementIndex
              * @param element {IVisualElement}
              * @returns {number}
@@ -217,6 +226,7 @@ var egret;
                 return this._elementsContent.indexOf(element);
             };
             /**
+             * 在可视容器中更改现有可视元素的位置
              * @method egret.gui.Group#setElementIndex
              * @param element {IVisualElement}
              * @param index {number}
@@ -234,6 +244,7 @@ var egret;
                     this._elementAdded(element, index, false);
             };
             /**
+             * 交换两个指定可视元素的索引
              * @method egret.gui.Group#swapElements
              * @param element1 {IVisualElement}
              * @param element2 {IVisualElement}
@@ -242,6 +253,7 @@ var egret;
                 this.swapElementsAt(this.getElementIndex(element1), this.getElementIndex(element2));
             };
             /**
+             * 交换容器中位于两个指定索引位置的可视元素
              * @method egret.gui.Group#swapElementsAt
              * @param index1 {number}
              * @param index2 {number}
@@ -309,65 +321,70 @@ var egret;
                 this.invalidateDisplayList();
             };
             /**
+             * 将可视元素添加到此容器中
              * @deprecated
              * @param child {DisplayObject}
              * @returns {DisplayObject}
              */
             Group.prototype.addChild = function (child) {
-                throw (new Error("addChild()" + Group.errorStr + "addElement()代替"));
+                throw (new Error(egret.getString(3004, egret.getString(3003))));
             };
             /**
+             * 将可视元素添加到此容器中
              * @deprecated
              * @param child {DisplayObject}
              * @param index {number}
              * @returns {DisplayObject}
              */
             Group.prototype.addChildAt = function (child, index) {
-                throw (new Error("addChildAt()" + Group.errorStr + "addElementAt()代替"));
+                throw (new Error(egret.getString(3005, egret.getString(3003))));
             };
-            /**
+            /**从此容器的子列表中删除指定的可视元素
              * @deprecated
              * @param child {DisplayObject}
              * @returns {DisplayObject}
              */
             Group.prototype.removeChild = function (child) {
-                throw (new Error("removeChild()" + Group.errorStr + "removeElement()代替"));
+                throw (new Error(egret.getString(3006, egret.getString(3003))));
             };
             /**
+             * 从此容器的子列表中删除指定的可视元素
              * @method egret.gui.Group#removeChildAt
              * @deprecated
              * @param index {number}
              * @returns {DisplayObject}
              */
             Group.prototype.removeChildAt = function (index) {
-                throw (new Error("removeChildAt()" + Group.errorStr + "removeElementAt()代替"));
+                throw (new Error(egret.getString(3007, egret.getString(3003))));
             };
             /**
+             * 在可视容器中更改现有可视元素的位置
              * @deprecated
              * @param child {DisplayObject}
              * @param index {number}
              */
             Group.prototype.setChildIndex = function (child, index) {
-                throw (new Error("setChildIndex()" + Group.errorStr + "setElementIndex()代替"));
+                throw (new Error(egret.getString(3008, egret.getString(3003))));
             };
             /**
+             * 交换两个指定可视元素的索引
              * @deprecated
              * @param child1 {DisplayObject}
              * @param child2 {DisplayObject}
              */
             Group.prototype.swapChildren = function (child1, child2) {
-                throw (new Error("swapChildren()" + Group.errorStr + "swapElements()代替"));
+                throw (new Error(egret.getString(3009, egret.getString(3003))));
             };
             /**
+             * 交换容器中位于两个指定索引位置的可视元素
              * @method egret.gui.Group#swapChildrenAt
              * @deprecated
              * @param index1 {number}
              * @param index2 {number}
              */
             Group.prototype.swapChildrenAt = function (index1, index2) {
-                throw (new Error("swapChildrenAt()" + Group.errorStr + "swapElementsAt()代替"));
+                throw (new Error(egret.getString(3010, egret.getString(3003))));
             };
-            Group.errorStr = "在此组件中不可用，若此组件为容器类，请使用";
             return Group;
         })(gui.GroupBase);
         gui.Group = Group;

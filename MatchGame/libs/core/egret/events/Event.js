@@ -32,23 +32,26 @@ var __extends = this.__extends || function (d, b) {
 };
 var egret;
 (function (egret) {
+    /**
+     * @classdesc
+     * Event 类作为创建 Event 对象的基类，当发生事件时，Event 对象将作为参数传递给事件侦听器。
+     * Event 类的属性包含有关事件的基本信息，例如事件的类型或者是否可以取消事件的默认行为。
+     * 对于许多事件（如由 Event 类常量表示的事件），此基本信息就足够了。但其他事件可能需要更详细的信息。
+     * 例如，与触摸关联的事件需要包括有关触摸事件的位置以及在触摸事件期间是否按下了任何键的其他信息。
+     * 您可以通过扩展 Event 类（TouchEvent 类执行的操作）将此类其他信息传递给事件侦听器。
+     * Egret API 为需要其他信息的常见事件定义多个 Event 子类。与每个 Event 子类关联的事件将在每个类的文档中加以介绍。
+     * Event 类的方法可以在事件侦听器函数中使用以影响事件对象的行为。
+     * 某些事件有关联的默认行为，通过调用 preventDefault() 方法，您的事件侦听器可以取消此行为。
+     * 可以通过调用 stopPropagation() 或 stopImmediatePropagation() 方法，将当前事件侦听器作为处理事件的最后一个事件侦听器。
+     * @link http://docs.egret-labs.org/post/manual/event/eventclass.html Event类
+     */
     var Event = (function (_super) {
         __extends(Event, _super);
         /**
-         * @class egret.Event
-         * @classdesc
-         * Event 类作为创建 Event 对象的基类，当发生事件时，Event 对象将作为参数传递给事件侦听器。
-         * Event 类的属性包含有关事件的基本信息，例如事件的类型或者是否可以取消事件的默认行为。
-         * 对于许多事件（如由 Event 类常量表示的事件），此基本信息就足够了。但其他事件可能需要更详细的信息。
-         * 例如，与触摸关联的事件需要包括有关触摸事件的位置以及在触摸事件期间是否按下了任何键的其他信息。
-         * 您可以通过扩展 Event 类（TouchEvent 类执行的操作）将此类其他信息传递给事件侦听器。
-         * Egret API 为需要其他信息的常见事件定义多个 Event 子类。与每个 Event 子类关联的事件将在每个类的文档中加以介绍。
-         * Event 类的方法可以在事件侦听器函数中使用以影响事件对象的行为。
-         * 某些事件有关联的默认行为，通过调用 preventDefault() 方法，您的事件侦听器可以取消此行为。
-         * 可以通过调用 stopPropagation() 或 stopImmediatePropagation() 方法，将当前事件侦听器作为处理事件的最后一个事件侦听器。
-         * @param {string} type 事件的类型，可以作为 Event.type 访问。
-         * @param bubbles{boolean} 确定 Event 对象是否参与事件流的冒泡阶段。默认值为 false。
-         * @param cancelable{boolean} 确定是否可以取消 Event 对象。默认值为 false。
+         * 创建一个作为参数传递给事件侦听器的 Event 对象。
+         * @param type {string} 事件的类型，可以作为 Event.type 访问。
+         * @param bubbles {boolean} 确定 Event 对象是否参与事件流的冒泡阶段。默认值为 false。
+         * @param cancelable {boolean} 确定是否可以取消 Event 对象。默认值为 false。
          */
         function Event(type, bubbles, cancelable) {
             if (bubbles === void 0) { bubbles = false; }
@@ -159,7 +162,7 @@ var egret;
                 this._isDefaultPrevented = true;
         };
         /**
-         * 防止对事件流中当前节点的后续节点中的所有事件侦听器进行处理。此方法不会影响当前节点 (currentTarget) 中的任何事件侦听器。
+         * 防止对事件流中当前节点的后续节点中的所有事件侦听器进行处理。此方法不会影响当前节点 currentTarget 中的任何事件侦听器。
          * 相比之下，stopImmediatePropagation() 方法可以防止对当前节点中和后续节点中的事件侦听器进行处理。
          * 对此方法的其它调用没有任何效果。可以在事件流的任何阶段中调用此方法。
          * 注意：此方法不会取消与此事件相关联的行为；有关此功能的信息，请参阅 preventDefault()。
@@ -190,6 +193,11 @@ var egret;
             this._target = null;
             this._currentTarget = null;
             this._eventPhase = 2;
+        };
+        Event.prototype.__recycle = function () {
+            this._currentTarget = null;
+            this._target = null;
+            this.data = null;
         };
         Event._dispatchByTarget = function (EventClass, target, type, props, bubbles, cancelable) {
             if (bubbles === void 0) { bubbles = false; }
@@ -226,7 +234,11 @@ var egret;
             return props;
         };
         /**
-         * 使用指定的EventDispatcher对象来抛出Event事件对象。抛出的对象将会缓存在对象池上，供下次循环复用。
+         * 使用指定的 EventDispatcher 对象来抛出 Event 事件对象。抛出的对象将会缓存在对象池上，供下次循环复用。
+         * @param target {egret.IEventDispatcher} 派发事件目标
+         * @param type {string} 事件类型
+         * @param bubbles {boolean} 确定 Event 对象是否参与事件流的冒泡阶段。默认值为 false。
+         * @param data {any} 事件data
          * @method egret.Event.dispatchEvent
          */
         Event.dispatchEvent = function (target, type, bubbles, data) {

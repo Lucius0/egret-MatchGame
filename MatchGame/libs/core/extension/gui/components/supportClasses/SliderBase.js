@@ -105,6 +105,7 @@ var egret;
                 configurable: true
             });
             /**
+             * 在 value 属性改变时为该属性设置后备存储，并调度 valueCommit 事件
              * @method egret.gui.SliderBase#setValue
              * @param value {number}
              */
@@ -224,6 +225,7 @@ var egret;
                 }
             };
             /**
+             * 正删除外观部件的实例时调用
              * @method egret.gui.SliderBase#partAdded
              * @param partName {string}
              * @param instance {any}

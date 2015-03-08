@@ -44,6 +44,7 @@ var egret;
         var GroupBase = (function (_super) {
             __extends(GroupBase, _super);
             /**
+             * 构造函数
              * @method egret.gui.GroupBase#constructor
              */
             function GroupBase() {
@@ -65,6 +66,7 @@ var egret;
                 this.touchEnabled = false;
             }
             /**
+             * 如果尚未设置布局对象，则 createChildren() 会为该容器指定默认布局对象 BasicLayout
              * @method egret.gui.GroupBase#createChildren
              */
             GroupBase.prototype.createChildren = function () {
@@ -75,6 +77,7 @@ var egret;
             };
             Object.defineProperty(GroupBase.prototype, "contentWidth", {
                 /**
+                 * 视域的内容的宽度
                  * @member egret.gui.GroupBase#contentWidth
                  */
                 get: function () {
@@ -83,6 +86,10 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
+            /**
+             * 设置setContentWidth
+             * @param value
+             */
             GroupBase.prototype.setContentWidth = function (value) {
                 if (value == this._contentWidth)
                     return;
@@ -93,6 +100,7 @@ var egret;
             };
             Object.defineProperty(GroupBase.prototype, "contentHeight", {
                 /**
+                 * 视域的内容的高度
                  * @member egret.gui.GroupBase#contentHeight
                  */
                 get: function () {
@@ -101,6 +109,10 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
+            /**
+             * 设置ContentHeight
+             * @param value
+             */
             GroupBase.prototype.setContentHeight = function (value) {
                 if (value == this._contentHeight)
                     return;
@@ -247,6 +259,7 @@ var egret;
                 }
             };
             /**
+             * 计算组件的默认大小和（可选）默认最小大小
              * @method egret.gui.GroupBase#measure
              */
             GroupBase.prototype.measure = function () {
@@ -262,6 +275,7 @@ var egret;
                 _super.prototype.invalidateDisplayList.call(this);
             };
             /**
+             * 标记组件，以便在稍后屏幕更新期间调用该组件的 updateDisplayList() 方法
              * @method egret.gui.GroupBase#invalidateDisplayList
              */
             GroupBase.prototype.invalidateDisplayList = function () {
@@ -279,12 +293,18 @@ var egret;
                 _super.prototype.invalidateSize.call(this);
             };
             /**
+             * 标记组件，以便在稍后屏幕更新期间调用该组件的 measure() 方法
              * @method egret.gui.GroupBase#invalidateSize
              */
             GroupBase.prototype.invalidateSize = function () {
                 _super.prototype.invalidateSize.call(this);
                 this._layoutInvalidateSizeFlag = true;
             };
+            /**
+             * 绘制对象和/或设置其子项的大小和位置
+             * @param unscaledWidth
+             * @param unscaledHeight
+             */
             GroupBase.prototype.updateDisplayList = function (unscaledWidth, unscaledHeight) {
                 _super.prototype.updateDisplayList.call(this, unscaledWidth, unscaledHeight);
                 if (this._layoutInvalidateDisplayListFlag && this._layout) {

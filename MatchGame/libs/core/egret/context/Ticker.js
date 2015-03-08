@@ -41,9 +41,10 @@ var egret;
             _super.call(this);
             this._timeScale = 1;
             this._paused = false;
+            this._callIndex = -1;
             this.callBackList = [];
             if (Ticker.instance != null) {
-                egret.Logger.fatal("egret.Ticker是框架内部使用的单例，不允许在外部实例化，计时器请使用egret.Timer类！");
+                egret.Logger.fatalWithErrorId(1002);
             }
         }
         /**
@@ -61,21 +62,23 @@ var egret;
             if (this._paused) {
                 return;
             }
-            var list = this.callBackList.concat();
-            var length = list.length;
             var frameTime = advancedTime * this._timeScale;
             frameTime *= this._timeScale;
-            for (var i = 0; i < length; i++) {
-                var eventBin = list[i];
+            this._callList = this.callBackList.concat();
+            this._callIndex = 0;
+            for (; this._callIndex < this._callList.length; this._callIndex++) {
+                var eventBin = this._callList[this._callIndex];
                 eventBin.listener.call(eventBin.thisObject, frameTime);
             }
+            this._callIndex = -1;
+            this._callList = null;
         };
         /**
          * 注册帧回调事件，同一函数的重复监听会被忽略。
          * @method egret.Ticker#register
          * @param listener {Function} 帧回调函数,参数返回上一帧和这帧的间隔时间。示例：onEnterFrame(frameTime:number):void
          * @param thisObject {any} 帧回调函数的this对象
-         * @param priority {any} 事件优先级，开发者请勿传递 Number.NEGATIVE_INFINITY 和 Number.POSITIVE_INFINITY
+         * @param priority {number} 事件优先级，开发者请勿传递 Number.NEGATIVE_INFINITY 和 Number.POSITIVE_INFINITY
          * @stable A-
          */
         Ticker.prototype.register = function (listener, thisObject, priority) {
@@ -93,6 +96,9 @@ var egret;
         Ticker.prototype.unregister = function (listener, thisObject) {
             var list = this.callBackList;
             this._removeEventBin(list, listener, thisObject);
+            if (this._callList && this._callIndex > -1) {
+                this._removeEventBin(this._callList, listener, thisObject, null, this._callIndex + 1);
+            }
         };
         /**
          * 在指定的延迟（以毫秒为单位）后运行指定的函数。
@@ -108,7 +114,7 @@ var egret;
             for (var _i = 3; _i < arguments.length; _i++) {
                 parameters[_i - 3] = arguments[_i];
             }
-            egret.Logger.warning("Ticker#setTimeout方法即将废弃,请使用egret.setTimeout");
+            egret.Logger.warningWithErrorId(1003);
             egret.setTimeout.apply(null, [listener, thisObject, delay].concat(parameters));
         };
         /**

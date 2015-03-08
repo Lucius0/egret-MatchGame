@@ -22,8 +22,7 @@ var skins;
                         new egret.gui.SetProperty("labelDisplay", "textColor", 0x222222),
                         new egret.gui.SetProperty("popUp", "displayPopUp", true)
                     ]),
-                    new egret.gui.State("disabled", [
-                    ])
+                    new egret.gui.State("disabled", [])
                 ];
             }
             Object.defineProperty(DropDownListSkin.prototype, "skinParts", {

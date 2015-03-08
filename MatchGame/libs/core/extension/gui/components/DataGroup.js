@@ -202,6 +202,7 @@ var egret;
                 renderer.visible = false;
             };
             /**
+             * 标记组件，以便在稍后屏幕更新期间调用该组件的 measure() 方法
              * @method egret.gui.DataGroup#invalidateSize
              */
             DataGroup.prototype.invalidateSize = function () {
@@ -626,6 +627,7 @@ var egret;
                 _super.prototype.createChildren.call(this);
             };
             /**
+             * 处理对组件设置的属性
              * @method egret.gui.DataGroup#commitProperties
              */
             DataGroup.prototype.commitProperties = function () {
@@ -677,6 +679,7 @@ var egret;
                 }
             };
             /**
+             * 计算组件的默认大小和（可选）默认最小大小
              * @method egret.gui.DataGroup#measure
              */
             DataGroup.prototype.measure = function () {
@@ -686,6 +689,7 @@ var egret;
                 _super.prototype.measure.call(this);
             };
             /**
+             * 绘制对象和/或设置其子项的大小和位置
              * @method egret.gui.DataGroup#updateDisplayList
              * @param unscaledWidth {number}
              * @param unscaledHeight {number}
@@ -818,6 +822,7 @@ var egret;
                     return " ";
             };
             /**
+             * 返回位于指定索引处的子显示对象实例
              * @method egret.gui.DataGroup#getElementAt
              * @param index {number}
              * @returns {IVisualElement}
@@ -826,6 +831,7 @@ var egret;
                 return this.indexToRenderer[index];
             };
             /**
+             * 返回 element 实例的索引位置
              * @method egret.gui.DataGroup#getElementIndex
              * @param element {IVisualElement}
              * @returns {number}
@@ -837,6 +843,7 @@ var egret;
             };
             Object.defineProperty(DataGroup.prototype, "numElements", {
                 /**
+                 * 获得对象容器的子对象总数
                  * @member egret.gui.DataGroup#numElements
                  */
                 get: function () {
@@ -848,15 +855,17 @@ var egret;
                 configurable: true
             });
             /**
+             * 将一个 DisplayObject 子实例添加到该 DisplayObjectContainer 实例中
              * @method egret.gui.DataGroup#addChild
              * @deprecated
              * @param child {DisplayObject}
              * @returns {DisplayObject}
              */
             DataGroup.prototype.addChild = function (child) {
-                throw (new Error("addChild()" + DataGroup.errorStr + "addElement()代替"));
+                throw (new Error(egret.getString(3004, egret.getString(3003))));
             };
             /**
+             * 将一个 DisplayObject 子实例添加到该 DisplayObjectContainer 实例中
              * @method egret.gui.DataGroup#addChildAt
              * @deprecated
              * @param child {DisplayObject}
@@ -864,59 +873,63 @@ var egret;
              * @returns {DisplayObject}
              */
             DataGroup.prototype.addChildAt = function (child, index) {
-                throw (new Error("addChildAt()" + DataGroup.errorStr + "addElementAt()代替"));
+                throw (new Error(egret.getString(3005, egret.getString(3003))));
             };
             /**
+             * 从 DisplayObjectContainer 实例的子列表中删除指定的 child DisplayObject 实例
              * @method egret.gui.DataGroup#removeChild
              * @deprecated
              * @param child {DisplayObject}
              * @returns {DisplayObject}
              */
             DataGroup.prototype.removeChild = function (child) {
-                throw (new Error("removeChild()" + DataGroup.errorStr + "removeElement()代替"));
+                throw (new Error(egret.getString(3006, egret.getString(3003))));
             };
             /**
+             * 从 DisplayObjectContainer 的子列表中指定的 index 位置删除子 DisplayObject
              * @method egret.gui.DataGroup#removeChildAt
              * @deprecated
              * @param index {number}
              * @returns {DisplayObject}
              */
             DataGroup.prototype.removeChildAt = function (index) {
-                throw (new Error("removeChildAt()" + DataGroup.errorStr + "removeElementAt()代替"));
+                throw (new Error(egret.getString(3007, egret.getString(3003))));
             };
             /**
+             * 更改现有子项在显示对象容器中的位置
              * @method egret.gui.DataGroup#setChildIndex
              * @deprecated
              * @param child {DisplayObject}
              * @param index {number}
              */
             DataGroup.prototype.setChildIndex = function (child, index) {
-                throw (new Error("setChildIndex()" + DataGroup.errorStr + "setElementIndex()代替"));
+                throw (new Error(egret.getString(3008, egret.getString(3003))));
             };
             /**
+             * 交换两个指定子对象的 Z 轴顺序（从前到后顺序）
              * @method egret.gui.DataGroup#swapChildren
              * @deprecated
              * @param child1 {DisplayObject}
              * @param child2 {DisplayObject}
              */
             DataGroup.prototype.swapChildren = function (child1, child2) {
-                throw (new Error("swapChildren()" + DataGroup.errorStr + "swapElements()代替"));
+                throw (new Error(egret.getString(3009, egret.getString(3003))));
             };
             /**
+             * 在子级列表中两个指定的索引位置，交换子对象的 Z 轴顺序（前后顺序）
              * @method egret.gui.DataGroup#swapChildrenAt
              * @deprecated
              * @param index1 {number}
              * @param index2 {number}
              */
             DataGroup.prototype.swapChildrenAt = function (index1, index2) {
-                throw (new Error("swapChildrenAt()" + DataGroup.errorStr + "swapElementsAt()代替"));
+                throw (new Error(egret.getString(3010, egret.getString(3003))));
             };
             /**
              * @method egret.gui.DataGroup.defaultRendererFactory
              * @param ClassFactory {any}
              */
             DataGroup.defaultRendererFactory = new gui.ClassFactory(gui.ItemRenderer);
-            DataGroup.errorStr = "在此组件中不可用，若此组件为容器类，请使用";
             return DataGroup;
         })(gui.GroupBase);
         gui.DataGroup = DataGroup;

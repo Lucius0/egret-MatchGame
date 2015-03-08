@@ -30,6 +30,7 @@ var egret;
      * @class egret.URLRequestMethod
      * @classdesc URLRequestMethod 类提供了一些值，这些值可指定在将数据发送到服务器时，
      * URLRequest 对象应使用 POST 方法还是 GET 方法。
+     * @link http://docs.egret-labs.org/post/manual/net/postget.html POST与GET
      */
     var URLRequestMethod = (function () {
         function URLRequestMethod() {

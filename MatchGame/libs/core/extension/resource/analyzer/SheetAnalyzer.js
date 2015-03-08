@@ -59,7 +59,6 @@ var RES;
             var loader = (event.target);
             var data = this.resItemDic[loader.hashCode];
             delete this.resItemDic[loader.hashCode];
-            this.recycler.push(loader);
             var resItem = data.item;
             var compFunc = data.func;
             resItem.loaded = (event.type == egret.Event.COMPLETE);
@@ -80,6 +79,7 @@ var RES;
                 }
             }
             resItem.url = resItem.data.url;
+            this.recycler.push(loader);
             compFunc.call(data.thisObject, resItem);
         };
         /**
@@ -94,7 +94,7 @@ var RES;
                 config = JSON.parse(str);
             }
             catch (e) {
-                egret.Logger.warning("JSON文件格式不正确: " + resItem.url);
+                egret.Logger.warningWithErrorId(1017, resItem.url, data);
             }
             if (config) {
                 this.sheetMap[name] = config;

@@ -49,6 +49,12 @@ var egret;
             function HSlider() {
                 _super.call(this);
             }
+            /**
+             * 将相对于轨道的 x,y 像素位置转换为介于最小值和最大值（包括两者）之间的一个值
+             * @param x
+             * @param y
+             * @returns {number}
+             */
             HSlider.prototype.pointToValue = function (x, y) {
                 if (!this.thumb || !this.track)
                     return 0;
@@ -56,6 +62,9 @@ var egret;
                 var thumbRange = this.track.layoutBoundsWidth - this.thumb.layoutBoundsWidth;
                 return this.minimum + ((thumbRange != 0) ? (x / thumbRange) * range : 0);
             };
+            /**
+             * 设置外观部件的边界，这些外观部件的几何图形不是完全由外观的布局指定的
+             */
             HSlider.prototype.updateSkinDisplayList = function () {
                 if (!this.thumb || !this.track)
                     return;

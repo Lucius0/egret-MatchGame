@@ -26,6 +26,9 @@
  */
 var egret;
 (function (egret) {
+    /**
+     * @private
+     */
     var PrimitiveShader = (function () {
         function PrimitiveShader(gl) {
             this.gl = null;

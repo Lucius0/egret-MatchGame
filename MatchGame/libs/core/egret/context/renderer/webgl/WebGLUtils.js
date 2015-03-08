@@ -26,6 +26,9 @@
  */
 var egret;
 (function (egret) {
+    /**
+     * @private
+     */
     var WebGLUtils = (function () {
         function WebGLUtils() {
         }
@@ -37,7 +40,7 @@ var egret;
             gl.attachShader(shaderProgram, fragmentShader);
             gl.linkProgram(shaderProgram);
             if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
-                console.log("无法初始化着色器");
+                egret.Logger.infoWithErrorId(1020);
             }
             return shaderProgram;
         };
@@ -52,7 +55,7 @@ var egret;
             gl.shaderSource(shader, shaderSrc);
             gl.compileShader(shader);
             if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-                console.log(gl.getShaderInfoLog(shader));
+                egret.Logger.info(gl.getShaderInfoLog(shader));
                 return null;
             }
             return shader;

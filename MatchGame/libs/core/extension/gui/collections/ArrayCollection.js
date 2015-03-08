@@ -100,7 +100,7 @@ var egret;
              */
             ArrayCollection.prototype.checkIndex = function (index) {
                 if (index < 0 || index >= this._source.length) {
-                    throw new RangeError("索引:\"" + index + "\"超出集合元素索引范围");
+                    throw new RangeError(egret.getString(3002, index));
                 }
             };
             Object.defineProperty(ArrayCollection.prototype, "length", {
@@ -137,12 +137,13 @@ var egret;
              */
             ArrayCollection.prototype.addItemAt = function (item, index) {
                 if (index < 0 || index > this._source.length) {
-                    throw new RangeError("索引:\"" + index + "\"超出集合元素索引范围");
+                    throw new RangeError(egret.getString(3002, index));
                 }
                 this._source.splice(index, 0, item);
                 this.dispatchCoEvent(gui.CollectionEventKind.ADD, index, -1, [item]);
             };
             /**
+             * 获取指定索引处的项目
              * @method egret.gui.ArrayCollection#getItemAt
              * @param index {number}
              * @returns {any}
@@ -151,6 +152,7 @@ var egret;
                 return this._source[index];
             };
             /**
+             * 如果项目位于列表中,返回该项目的索引。否则返回-1。
              * @method egret.gui.ArrayCollection#getItemIndex
              * @param item {any}
              * @returns {number}

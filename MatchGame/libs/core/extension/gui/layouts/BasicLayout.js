@@ -99,6 +99,9 @@ var egret;
                 bounds.bottom = scrollRect.bottom + this._mouseWheelSpeed;
                 return bounds;
             };
+            /**
+             *基于目标的内容测量其默认大小，并（可选）测量目标的默认最小大小
+             */
             BasicLayout.prototype.measure = function () {
                 _super.prototype.measure.call(this);
                 if (this.target == null)
@@ -152,6 +155,11 @@ var egret;
                 this.target.measuredWidth = width;
                 this.target.measuredHeight = height;
             };
+            /**
+             * 调整目标的元素的大小并定位这些元素
+             * @param unscaledWidth
+             * @param unscaledHeight
+             */
             BasicLayout.prototype.updateDisplayList = function (unscaledWidth, unscaledHeight) {
                 _super.prototype.updateDisplayList.call(this, unscaledWidth, unscaledHeight);
                 if (this.target == null)

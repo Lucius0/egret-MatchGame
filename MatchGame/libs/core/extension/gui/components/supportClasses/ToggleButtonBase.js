@@ -43,13 +43,20 @@ var egret;
         var ToggleButtonBase = (function (_super) {
             __extends(ToggleButtonBase, _super);
             /**
+             * 构造函数
              * @method egret.gui.ToggleButtonBase#constructor
              */
             function ToggleButtonBase() {
                 _super.call(this);
+                /**
+                 *
+                 * @type {boolean}
+                 * @private
+                 */
                 this._selected = false;
                 /**
                  * 是否根据鼠标事件自动变换选中状态,默认true。仅框架内使用。
+                 * @private
                  */
                 this._autoSelected = true;
             }
@@ -67,6 +74,11 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
+            /**
+             *
+             * @param value
+             * @private
+             */
             ToggleButtonBase.prototype._setSelected = function (value) {
                 if (value == this._selected)
                     return;
@@ -76,6 +88,7 @@ var egret;
                 this.invalidateSkinState();
             };
             /**
+             * 返回要应用到外观的状态的名称
              * @method egret.gui.ToggleButtonBase#getCurrentSkinState
              * @returns {string}
              */
@@ -93,6 +106,9 @@ var egret;
                     return state == "disabled" ? "disabled" : "down";
                 }
             };
+            /**
+             * 当在用户单击按钮之后处理 MouseEvent.MOUSE_UP 事件时，将调用此方法
+             */
             ToggleButtonBase.prototype.buttonReleased = function () {
                 _super.prototype.buttonReleased.call(this);
                 if (!this._autoSelected || !this.enabled)

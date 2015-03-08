@@ -224,6 +224,7 @@ var egret;
                 configurable: true
             });
             /**
+             * 处理对组件设置的属性
              * @method egret.gui.TextBase#commitProperties
              */
             Label.prototype.commitProperties = function () {
@@ -238,6 +239,7 @@ var egret;
                 }
             };
             /**
+             * 计算组件的默认大小和（可选）默认最小大小
              * @method egret.gui.Label#measure
              */
             Label.prototype.measure = function () {
@@ -302,6 +304,7 @@ var egret;
                 this.measuredHeight += paddingT + paddingB;
             };
             /**
+             * 绘制对象和/或设置其子项的大小和位置
              * @method egret.gui.Label#updateDisplayList
              * @param unscaledWidth {number}
              * @param unscaledHeight {number}

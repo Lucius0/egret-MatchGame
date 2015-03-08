@@ -30,6 +30,7 @@ var egret;
      * @class egret.EventPhase
      * @classdesc
      * EventPhase 类可为 Event 类的 eventPhase 属性提供值。
+     * @link http://docs.egret-labs.org/post/manual/event/eventflow.html 事件的执行流程
      */
     var EventPhase = (function () {
         function EventPhase() {

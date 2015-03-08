@@ -58,8 +58,23 @@ var egret;
                 this.lastUnscaledWidth = NaN;
                 this._padding = 0;
                 this._paddingLeft = NaN;
+                /**
+                 *
+                 * @type {number}
+                 * @private
+                 */
                 this._paddingRight = NaN;
+                /**
+                 *
+                 * @type {number}
+                 * @private
+                 */
                 this._paddingTop = NaN;
+                /**
+                 *
+                 * @type {number}
+                 * @private
+                 */
                 this._paddingBottom = NaN;
                 this.addEventListener(gui.UIEvent.UPDATE_COMPLETE, this.updateCompleteHandler, this);
             }
@@ -115,6 +130,7 @@ var egret;
                 configurable: true
             });
             /**
+             * 创建子对象
              */
             BitmapLabel.prototype.createChildren = function () {
                 _super.prototype.createChildren.call(this);
@@ -258,6 +274,7 @@ var egret;
                 configurable: true
             });
             /**
+             * 计算  容器默认大小的最小值和最大值
              * @method egret.gui.BitmapLabel#measure
              */
             BitmapLabel.prototype.measure = function () {
@@ -314,6 +331,7 @@ var egret;
                 this.measuredHeight += paddingT + paddingB;
             };
             /**
+             * 通过设置此容器子项的位置和大小来响应大小更改
              * @method egret.gui.BitmapLabel#updateDisplayList
              * @param unscaledWidth {number}
              * @param unscaledHeight {number}
@@ -357,6 +375,9 @@ var egret;
                 this._textChanged = false;
                 this._addToDisplayList(this._bitmapText);
             };
+            /**
+             * 处理对组件设置的属性
+             */
             BitmapLabel.prototype.commitProperties = function () {
                 _super.prototype.commitProperties.call(this);
                 if (!this._bitmapText) {

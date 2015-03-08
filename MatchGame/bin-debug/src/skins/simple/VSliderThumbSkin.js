@@ -15,12 +15,9 @@ var skins;
                 this.__s = egret.gui.setProperties;
                 this.elementsContent = [this.__4_i()];
                 this.states = [
-                    new egret.gui.State("up", [
-                    ]),
-                    new egret.gui.State("down", [
-                    ]),
-                    new egret.gui.State("disabled", [
-                    ])
+                    new egret.gui.State("up", []),
+                    new egret.gui.State("down", []),
+                    new egret.gui.State("disabled", [])
                 ];
             }
             VSliderThumbSkin.prototype.__4_i = function () {

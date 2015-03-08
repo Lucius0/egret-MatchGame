@@ -30,7 +30,7 @@ var egret;
      * 转换数字为颜色字符串
      * @method egret.toColorString
      * @param value {number}
-     * @returns {string}
+     * @returns {string} 颜色字符串，例如"#ffffff"。
      */
     function toColorString(value) {
         if (isNaN(value) || value < 0)

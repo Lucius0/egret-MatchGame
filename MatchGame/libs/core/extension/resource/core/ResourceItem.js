@@ -62,6 +62,7 @@ var RES;
             configurable: true
         });
         /**
+         * 转成字符串
          * @method RES.ResourceItem#toString
          * @returns {string}
          */

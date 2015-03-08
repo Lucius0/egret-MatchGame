@@ -15,8 +15,7 @@ var skins;
                 this.__s = egret.gui.setProperties;
                 this.elementsContent = [this.__10_i()];
                 this.states = [
-                    new egret.gui.State("up", [
-                    ]),
+                    new egret.gui.State("up", []),
                     new egret.gui.State("down", [
                         new egret.gui.SetProperty("__8", "source", "radiobutton_select_over_png")
                     ]),

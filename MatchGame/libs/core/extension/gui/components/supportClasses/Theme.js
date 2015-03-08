@@ -60,13 +60,13 @@ var egret;
                     this.skinMap = data.skins;
                 }
                 catch (e) {
-                    egret.Logger.warning("JSON文件格式不正确: " + loader._request.url + "\ndata:" + loader.data);
+                    egret.Logger.warningWithErrorId(1017, loader._request.url, loader.data);
                 }
                 this.handleDelyList();
             };
             Theme.prototype.onLoadError = function (event) {
                 var loader = (event.target);
-                egret.Logger.warning("主题配置文件加载失败: " + loader._request.url);
+                egret.Logger.warningWithErrorId(3000, loader._request.url);
                 this.handleDelyList();
             };
             Theme.prototype.handleDelyList = function () {
@@ -115,7 +115,7 @@ var egret;
                 }
                 var skinClass = egret.getDefinitionByName(skinName);
                 if (!skinClass) {
-                    egret.Logger.warning("找不到主题中所配置的皮肤类名: " + skinName);
+                    egret.Logger.warningWithErrorId(3001, skinName);
                     return null;
                 }
                 return new skinClass();

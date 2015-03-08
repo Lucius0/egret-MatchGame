@@ -60,14 +60,31 @@ var egret;
                 this.track = null;
                 /**
                  * 记录鼠标在thumb上按下的位置
+                 * @type {number}
+                 * @private
                  */
                 this._clickOffsetX = NaN;
+                /**
+                 *
+                 * @type {number}
+                 * @private
+                 */
                 this._clickOffsetY = NaN;
                 /**
                  * 当鼠标拖动thumb时，需要更新value的标记。
                  */
                 this.needUpdateValue = false;
+                /**
+                 *
+                 * @type {number}
+                 * @private
+                 */
                 this._moveStageX = NaN;
+                /**
+                 *
+                 * @type {number}
+                 * @private
+                 */
                 this._moveStageY = NaN;
                 this.mouseDownTarget = null;
                 this.addEventListener(egret.Event.ADDED_TO_STAGE, this.addedToStageHandler, this);
@@ -171,6 +188,7 @@ var egret;
                 return this.minimum;
             };
             /**
+             * 按 stepSize 增大或减小 value
              * @method egret.gui.TrackBase#changeValueByStep
              * @param increase {boolean}
              */
@@ -182,6 +200,7 @@ var egret;
                     this.dispatchEventWith(egret.Event.CHANGE);
             };
             /**
+             * 添加外观部件时调用
              * @method egret.gui.TrackBase#partAdded
              * @param partName {string}
              * @param instance {any}
@@ -200,6 +219,7 @@ var egret;
                 }
             };
             /**
+             * 删除外观部件的实例时调用
              * @method egret.gui.TrackBase#partRemoved
              * @param partName {string}
              * @param instance {any}
@@ -217,6 +237,7 @@ var egret;
                 }
             };
             /**
+             * 绘制对象和/或设置其子项的大小和位置
              * @method egret.gui.TrackBase#updateDisplayList
              * @param w {number}
              * @param h {number}

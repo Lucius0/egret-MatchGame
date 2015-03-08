@@ -75,7 +75,7 @@ class GameApp extends egret.DisplayObjectContainer
         {
             for(var y:number = 0; y < GameApp.boardHeight; y++)
             {
-                var c:Card = <Card>new egret.MovieClip(mcDataFactory.generateMovieClipData());
+                var c:Card = <Card>(new egret.MovieClip(mcDataFactory.generateMovieClipData()));
                 c.touchEnabled = true;
                 c.x = x * GameApp.cardHorizontalSpacing + GameApp.boardOffsetX; // set position
                 c.y = y * GameApp.cardVerticalSpacing + GameApp.boardOffsetY;
@@ -105,8 +105,8 @@ class GameApp extends egret.DisplayObjectContainer
 
     private clickCard(e:egret.TouchEvent):void
     {
-        console.log("1111111111111111111111111111");
-        var thisCard:Card = <Card>e.target;
+        var thisCard:Card = <Card>(e.target);
+
         if(this.firstCard == null)
         {
             this.firstCard = thisCard;

@@ -36,11 +36,12 @@ var egret;
      * @class egret.URLRequest
      * @classdesc URLRequest 类可捕获单个 HTTP 请求中的所有信息。
      * @extends egret.HashObject
+     * @link http://docs.egret-labs.org/post/manual/net/createconnect.html 构建通信请求
      */
     var URLRequest = (function (_super) {
         __extends(URLRequest, _super);
         /**
-         * 实例化一个URLRequest对象
+         * 创建一个 egret.URLRequest 对象
          * @method egret.URLRequest#constructor
          * @param url {string} 进行网络请求的地址
          */

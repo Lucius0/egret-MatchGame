@@ -26,6 +26,9 @@
  */
 var egret;
 (function (egret) {
+    /**
+     * @private
+     */
     var InteractionMode = (function () {
         function InteractionMode() {
         }

@@ -201,6 +201,7 @@ var egret;
                 this.invalidateDisplayList();
             };
             /**
+             * 绘制对象和/或设置其子项的大小和位置
              * @method egret.gui.ProgressBar#updateDisplayList
              * @param unscaledWidth {number}
              * @param unscaledHeight {number}
@@ -209,6 +210,11 @@ var egret;
                 _super.prototype.updateDisplayList.call(this, unscaledWidth, unscaledHeight);
                 this.updateSkinDisplayList();
             };
+            /**
+             * [覆盖] 添加外观部件时调用
+             * @param partName
+             * @param instance
+             */
             ProgressBar.prototype.partAdded = function (partName, instance) {
                 if (instance == this.track) {
                     if (this.track instanceof gui.UIComponent) {
@@ -217,6 +223,11 @@ var egret;
                     }
                 }
             };
+            /**
+             * [覆盖] 正删除外观部件的实例时调用
+             * @param partName
+             * @param instance
+             */
             ProgressBar.prototype.partRemoved = function (partName, instance) {
                 if (instance == this.track) {
                     if (this.track instanceof gui.UIComponent) {
@@ -232,6 +243,9 @@ var egret;
                 this.trackResizedOrMoved = true;
                 this.invalidateProperties();
             };
+            /**
+             * 处理对组件设置的属性
+             */
             ProgressBar.prototype.commitProperties = function () {
                 _super.prototype.commitProperties.call(this);
                 if (this.trackResizedOrMoved) {

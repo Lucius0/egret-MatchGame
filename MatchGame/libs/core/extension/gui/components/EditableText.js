@@ -34,6 +34,9 @@ var egret;
 (function (egret) {
     var gui;
     (function (gui) {
+        /**
+         *
+         */
         var EditableText = (function (_super) {
             __extends(EditableText, _super);
             function EditableText() {
@@ -427,6 +430,7 @@ var egret;
                 configurable: true
             });
             /**
+             * 处理对组件设置的属性
              * @inheritDoc
              */
             EditableText.prototype.commitProperties = function () {
@@ -491,6 +495,7 @@ var egret;
                 }
             };
             /**
+             * 通过设置此容器子项的位置和大小来响应大小更改
              * @inheritDoc
              */
             EditableText.prototype.updateDisplayList = function (unscaledWidth, unscaledHeight) {
@@ -577,6 +582,7 @@ var egret;
                 }
             };
             /**
+             * 计算  容器默认大小的最小值和最大值
              * @inheritDoc
              */
             EditableText.prototype.measure = function () {

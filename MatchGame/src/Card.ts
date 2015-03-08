@@ -3,7 +3,6 @@ class Card extends egret.MovieClip
     public constructor()
     {
         super();
-        this.touchEnabled = true;
         //var data = RES.getRes("card_json");
         //var texture = RES.getRes("card_png");
         //var mcDataFactory = new egret.MovieClipDataFactory(data, texture);

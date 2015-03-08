@@ -68,6 +68,11 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
+            /**
+             *
+             * @returns {any}
+             * @private
+             */
             Button.prototype._getIcon = function () {
                 if (this.iconDisplay) {
                     return this.iconDisplay.source;
@@ -76,6 +81,11 @@ var egret;
                     return this._icon;
                 }
             };
+            /**
+             *
+             * @param value
+             * @private
+             */
             Button.prototype._setIcon = function (value) {
                 this._icon = value;
                 if (this.iconDisplay) {
@@ -83,6 +93,7 @@ var egret;
                 }
             };
             /**
+             * 添加外观部件时调用
              * @method egret.gui.ButtonBase#partAdded
              * @param partName {string}
              * @param instance {any}

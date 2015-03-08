@@ -36,10 +36,18 @@ var egret;
      * @classdesc
      * @class egret.BitmapFont
      * 位图字体,是一个字体的纹理集，通常作为BitmapText.font属性的值。
+     * @link
+     * http://bbs.egret-labs.org/thread-918-1-1.html TextureMerger
+     * http://bbs.egret-labs.org/forum.php?mod=viewthread&tid=251 文本(含位图字体具体用法)
      * @extends egret.SpriteSheet
      */
     var BitmapFont = (function (_super) {
         __extends(BitmapFont, _super);
+        /**
+         * 创建一个 egret.BitmapFont 对象
+         * @param texture {egret.Texture} 纹理集
+         * @param config {any} 配置数据
+         */
         function BitmapFont(texture, config) {
             _super.call(this, texture);
             this.firstCharHeight = 0;
@@ -53,6 +61,12 @@ var egret;
                 this.charList = {};
             }
         }
+        /**
+         * 通过 name 属性获取对应纹理
+         * @param name {string} name属性
+         * @method egret.BitmapFont#getTexture
+         * @returns {egret.Texture}
+         */
         BitmapFont.prototype.getTexture = function (name) {
             var texture = this._textureMap[name];
             if (!texture) {

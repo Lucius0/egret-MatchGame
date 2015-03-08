@@ -29,6 +29,7 @@ var egret;
     /**
      * @class egret.URLLoaderDataFormat
      * @classdesc URLLoaderDataFormat 类提供了一些用于指定如何接收已下载数据的值。
+     * @link http://docs.egret-labs.org/post/manual/net/netformat.html 读取不同数据格式
      */
     var URLLoaderDataFormat = (function () {
         function URLLoaderDataFormat() {

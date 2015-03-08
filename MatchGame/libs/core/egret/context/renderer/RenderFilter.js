@@ -97,7 +97,7 @@ var egret;
                 return;
             }
             //计算worldBounds
-            var bounds = egret.DisplayObject.getTransformBounds(data._getSize(egret.Rectangle.identity), data._worldTransform);
+            var bounds = egret.DisplayObject.getTransformBounds(data._getSize(RenderFilter.identityRectangle), data._worldTransform);
             data._worldBounds.initialize(bounds.x, bounds.y, bounds.width, bounds.height);
             var originalData = this._originalData;
             originalData.sourceX = sourceX;
@@ -197,6 +197,7 @@ var egret;
             egret.MainContext.instance.stage.removeEventListener(egret.Event.RESIZE, this.onResize, this);
             this._defaultDrawAreaList = null;
         };
+        RenderFilter.identityRectangle = new egret.Rectangle();
         return RenderFilter;
     })(egret.HashObject);
     egret.RenderFilter = RenderFilter;

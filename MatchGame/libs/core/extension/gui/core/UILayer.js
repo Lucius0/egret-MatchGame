@@ -68,10 +68,20 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
+            /**
+             * 返回指定索引处的可视元素
+             * @param index
+             * @returns {IVisualElement}
+             */
             UILayer.prototype.getElementAt = function (index) {
                 var retval = this.owner[this.raw_getElementAt](this.owner[this.lowerBoundReference] + index);
                 return retval;
             };
+            /**
+             * 将可视元素添加到此容器中
+             * @param element
+             * @returns {IVisualElement}
+             */
             UILayer.prototype.addElement = function (element) {
                 var index = this.owner[this.upperBoundReference];
                 if (element.parent === this.owner)
@@ -81,12 +91,23 @@ var egret;
                 element.ownerChanged(this);
                 return element;
             };
+            /**
+             * 将可视元素添加到此容器中
+             * @param element
+             * @param index
+             * @returns {IVisualElement}
+             */
             UILayer.prototype.addElementAt = function (element, index) {
                 this.owner[this.upperBoundReference]++;
                 this.owner[this.raw_addElementAt](element, this.owner[this.lowerBoundReference] + index);
                 element.ownerChanged(this);
                 return element;
             };
+            /**
+             * 从此容器的子列表中删除指定的可视元素
+             * @param element
+             * @returns {IVisualElement}
+             */
             UILayer.prototype.removeElement = function (element) {
                 var index = this.owner[this.raw_getElementIndex](element);
                 if (this.owner[this.lowerBoundReference] <= index && index < this.owner[this.upperBoundReference]) {
@@ -96,6 +117,11 @@ var egret;
                 element.ownerChanged(null);
                 return element;
             };
+            /**
+             * 从容器中的指定索引位置删除可视元素
+             * @param index
+             * @returns {IVisualElement}
+             */
             UILayer.prototype.removeElementAt = function (index) {
                 index += this.owner[this.lowerBoundReference];
                 var element;
@@ -106,11 +132,21 @@ var egret;
                 element.ownerChanged(null);
                 return element;
             };
+            /**
+             * 返回可视元素的索引位置
+             * @param element
+             * @returns {number}
+             */
             UILayer.prototype.getElementIndex = function (element) {
                 var retval = this.owner[this.raw_getElementIndex](element);
                 retval -= this.owner[this.lowerBoundReference];
                 return retval;
             };
+            /**
+             * 在可视容器中更改现有可视元素的位置
+             * @param element
+             * @param index
+             */
             UILayer.prototype.setElementIndex = function (element, index) {
                 this.owner[this.raw_setElementIndex](element, this.owner[this.lowerBoundReference] + index);
             };

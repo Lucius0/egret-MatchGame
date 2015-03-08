@@ -75,7 +75,7 @@ var egret;
             this._designWidth = width;
             this._designHeight = height;
             if (arguments[2]) {
-                egret.Logger.warning("该方法目前不应传入 resolutionPolicy 参数，请在 docs/1.0_Final_ReleaseNote中查看如何升级");
+                egret.Logger.warningWithErrorId(1001);
                 var resolutionPolicy = arguments[2];
                 this._setResolutionPolicy(resolutionPolicy);
             }
@@ -118,7 +118,7 @@ var egret;
     egret.StageDelegate = StageDelegate;
     StageDelegate.prototype.__class__ = "egret.StageDelegate";
     /**
-     * @classdesc
+     * @private
      */
     var ResolutionPolicy = (function () {
         function ResolutionPolicy(containerStg, contentStg) {
@@ -148,6 +148,7 @@ var egret;
     egret.ResolutionPolicy = ResolutionPolicy;
     ResolutionPolicy.prototype.__class__ = "egret.ResolutionPolicy";
     /**
+     * @private
      */
     var ContainerStrategy = (function () {
         function ContainerStrategy() {
@@ -196,6 +197,7 @@ var egret;
     /**
      * @classdesc
      * @extends egret.ContainerStrategy
+     * @private
      */
     var EqualToFrame = (function (_super) {
         __extends(EqualToFrame, _super);
@@ -210,6 +212,7 @@ var egret;
     egret.EqualToFrame = EqualToFrame;
     EqualToFrame.prototype.__class__ = "egret.EqualToFrame";
     /**
+     * @private
      */
     var ContentStrategy = (function () {
         function ContentStrategy() {
@@ -260,6 +263,7 @@ var egret;
      * @class egret.FixedHeight
      * @classdesc
      * @extends egret.ContentStrategy
+     * @private
      */
     var FixedHeight = (function (_super) {
         __extends(FixedHeight, _super);
@@ -301,6 +305,7 @@ var egret;
      * @class egret.FixedWidth
      * @classdesc
      * @extends egret.ContentStrategy
+     * @private
      */
     var FixedWidth = (function (_super) {
         __extends(FixedWidth, _super);
@@ -337,6 +342,7 @@ var egret;
      * @class egret.FixedSize
      * @classdesc
      * @extends egret.ContentStrategy
+     * @private
      */
     var FixedSize = (function (_super) {
         __extends(FixedSize, _super);
@@ -367,6 +373,7 @@ var egret;
      * @class egret.NoScale
      * @classdesc
      * @extends egret.ContentStrategy
+     * @private
      */
     var NoScale = (function (_super) {
         __extends(NoScale, _super);
@@ -389,6 +396,9 @@ var egret;
     })(ContentStrategy);
     egret.NoScale = NoScale;
     NoScale.prototype.__class__ = "egret.NoScale";
+    /**
+     * @private
+     */
     var ShowAll = (function (_super) {
         __extends(ShowAll, _super);
         function ShowAll() {
@@ -421,6 +431,9 @@ var egret;
     })(ContentStrategy);
     egret.ShowAll = ShowAll;
     ShowAll.prototype.__class__ = "egret.ShowAll";
+    /**
+     * @private
+     */
     var FullScreen = (function (_super) {
         __extends(FullScreen, _super);
         function FullScreen() {

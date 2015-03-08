@@ -36,6 +36,9 @@ var egret;
     (function (gui) {
         var SkinnableTextBase = (function (_super) {
             __extends(SkinnableTextBase, _super);
+            /**
+             * 构造函数
+             */
             function SkinnableTextBase() {
                 _super.call(this);
                 this._focusEnabled = true;
@@ -423,6 +426,7 @@ var egret;
                 this.invalidateProperties();
             };
             /**
+             * 返回要应用到外观的状态的名称
              * @inheritDoc
              */
             SkinnableTextBase.prototype.getCurrentSkinState = function () {
@@ -437,6 +441,7 @@ var egret;
                 return _super.prototype.getCurrentSkinState.call(this);
             };
             /**
+             * 添加外观部件时调用
              * @inheritDoc
              */
             SkinnableTextBase.prototype.partAdded = function (partName, instance) {
@@ -451,6 +456,7 @@ var egret;
                 }
             };
             /**
+             * 正删除外观部件的实例时调用
              * @inheritDoc
              */
             SkinnableTextBase.prototype.partRemoved = function (partName, instance) {
@@ -462,6 +468,7 @@ var egret;
                 }
             };
             /**
+             * 设置此组件的焦点
              * @inheritDoc
              */
             SkinnableTextBase.prototype.setFocus = function () {

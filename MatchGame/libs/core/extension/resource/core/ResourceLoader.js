@@ -111,7 +111,7 @@ var RES;
             if (this.itemListDic[groupName] || !groupName)
                 return;
             if (!list || list.length == 0) {
-                egret.Logger.warning("RES加载了不存在或空的资源组：\"" + groupName + "\"");
+                egret.Logger.warningWithErrorId(2001, groupName);
                 var event = new RES.ResourceEvent(RES.ResourceEvent.GROUP_LOAD_ERROR);
                 event.groupName = groupName;
                 this.dispatchEvent(event);

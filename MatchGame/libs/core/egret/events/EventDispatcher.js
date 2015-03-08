@@ -36,23 +36,20 @@ var egret;
      *
      * @class egret.EventDispatcher
      * @classdesc
-     * EventDispatcher是egret的事件派发器类，负责进行事件的发送和侦听。
+     * EventDispatcher 是 Egret 的事件派发器类，负责进行事件的发送和侦听。
      *
      * 事件目标是事件如何通过显示列表层次结构这一问题的焦点。当发生鼠标单击、触摸或按键等事件时，
      * 引擎会将事件对象调度到从显示列表根开始的事件流中。然后该事件对象在显示列表中前进，直到到达事件目标，
      * 然后从这一点开始其在显示列表中的回程。在概念上，到事件目标的此往返行程被划分为三个阶段：
      * 捕获阶段包括从根到事件目标节点之前的最后一个节点的行程，目标阶段仅包括事件目标节点，冒泡阶段包括回程上遇到的任何后续节点到显示列表的根。
-     *
-     * @extends egret.HashObject
-     * @implements egret.IEventDispatcher
-     *
+     * @link http://docs.egret-labs.org/post/manual/event/eventlistener.html 事件侦听器
      */
     var EventDispatcher = (function (_super) {
         __extends(EventDispatcher, _super);
         /**
-         * EventDispatcher 类是可调度事件的所有类的基类。EventDispatcher 类实现 IEventDispatcher 接口
-         * ，并且是 DisplayObject 类的基类。EventDispatcher 类允许显示列表上的任何对象都是一个事件目标，
-         * 同样允许使用 IEventDispatcher 接口的方法。
+         * EventDispatcher 类是可调度事件的所有类的基类。
+         * EventDispatcher 类实现 IEventDispatcher 接口 ，并且是 DisplayObject 类的基类。
+         * EventDispatcher 类允许显示列表上的任何对象都是一个事件目标，同样允许使用 IEventDispatcher 接口的方法。
          */
         function EventDispatcher(target) {
             if (target === void 0) { target = null; }
@@ -101,7 +98,7 @@ var egret;
                 priority = 0;
             }
             if (!listener) {
-                egret.Logger.fatal("addEventListener侦听函数不能为空");
+                egret.Logger.fatalWithErrorId(1010);
             }
             var eventMap;
             if (useCapture) {
@@ -173,12 +170,13 @@ var egret;
         /**
          * 在一个事件列表中按优先级插入事件对象
          */
-        EventDispatcher.prototype._removeEventBin = function (list, listener, thisObject, display) {
+        EventDispatcher.prototype._removeEventBin = function (list, listener, thisObject, display, fromIdx) {
             if (display === void 0) { display = undefined; }
+            if (fromIdx === void 0) { fromIdx = 0; }
             var length = list.length;
-            for (var i = 0; i < length; i++) {
+            for (var i = fromIdx; i < length; i++) {
                 var bin = list[i];
-                if (bin.listener === listener && bin.thisObject === thisObject && bin.display === display) {
+                if (bin.listener === listener && bin.thisObject === thisObject && bin.display == display) {
                     list.splice(i, 1);
                     return true;
                 }

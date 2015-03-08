@@ -37,7 +37,7 @@ var egret;
         /**
          * @class egret.gui.RadioButton
          * @classdesc
-         * 单选按钮
+         * RadioButton 组件使用户可在一组互相排斥的选择中做出一种选择
          * @extends egret.gui.ToggleButtonBase
          */
         var RadioButton = (function (_super) {
@@ -64,6 +64,7 @@ var egret;
             }
             Object.defineProperty(RadioButton.prototype, "enabled", {
                 /**
+                 * 组件是否可以接受用户交互。默认值为true。设置此属性将影响组内所有单选按钮
                  * @member egret.gui.RadioButton#enabled
                  */
                 get: function () {
@@ -138,7 +139,9 @@ var egret;
                 configurable: true
             });
             /**
-             * @inheritDoc
+             *
+             * @param value
+             * @private
              */
             RadioButton.prototype._setSelected = function (value) {
                 _super.prototype._setSelected.call(this, value);
@@ -164,6 +167,7 @@ var egret;
                 configurable: true
             });
             /**
+             * 处理对组件设置的属性
              * @method egret.gui.RadioButton#commitProperties
              */
             RadioButton.prototype.commitProperties = function () {
@@ -174,6 +178,7 @@ var egret;
                 _super.prototype.commitProperties.call(this);
             };
             /**
+             * 绘制对象和/或设置其子项的大小和位置
              * @method egret.gui.RadioButton#updateDisplayList
              * @param unscaledWidth {number}
              * @param unscaledHeight {number}
@@ -188,6 +193,7 @@ var egret;
                 }
             };
             /**
+             * 当在用户单击按钮之后处理 MouseEvent.MOUSE_UP 事件时，将调用此方法
              * @method egret.gui.RadioButton#buttonReleased
              */
             RadioButton.prototype.buttonReleased = function () {

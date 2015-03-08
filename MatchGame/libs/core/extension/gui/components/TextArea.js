@@ -124,6 +124,7 @@ var egret;
                 this.dispatchEvent(new egret.Event(egret.Event.CHANGE));
             };
             /**
+             * 处理对组件设置的属性
              * @inheritDoc
              */
             TextArea.prototype.commitProperties = function () {
@@ -140,6 +141,7 @@ var egret;
                 }
             };
             /**
+             * 添加外观部件时调用
              * @inheritDoc
              */
             TextArea.prototype.partAdded = function (partName, instance) {
@@ -151,6 +153,7 @@ var egret;
                 }
             };
             /**
+             * 创建外观部件的引用
              * @inheritDoc
              */
             TextArea.prototype.createSkinParts = function () {

@@ -44,6 +44,7 @@ var egret;
         var TextBase = (function (_super) {
             __extends(TextBase, _super);
             /**
+             * 构造函数
              * @method egret.gui.TextBase#constructor
              */
             function TextBase() {
@@ -79,6 +80,10 @@ var egret;
                 this._textFlowChanged = false;
                 this._hasNoStyleChild = true;
             }
+            /**
+             * 检测对样式属性的更改
+             * @param styleProp
+             */
             TextBase.prototype.styleChanged = function (styleProp) {
                 if (this.allStyleChanged) {
                     return;
@@ -164,6 +169,7 @@ var egret;
                 configurable: true
             });
             /**
+             * 设置此组件的焦点
              * @inheritDoc
              */
             TextBase.prototype.setFocus = function () {
@@ -276,6 +282,7 @@ var egret;
             };
             Object.defineProperty(TextBase.prototype, "textColor", {
                 /**
+                 * 文本颜色
                  * @member egret.gui.TextBase#textColor
                  */
                 get: function () {
@@ -293,6 +300,7 @@ var egret;
             });
             Object.defineProperty(TextBase.prototype, "text", {
                 /**
+                 * 获得文体内容
                  * @member egret.gui.TextBase#text
                  */
                 get: function () {
@@ -328,12 +336,18 @@ var egret;
                 enumerable: true,
                 configurable: true
             });
+            /**
+             * 创建组件的子对象
+             */
             TextBase.prototype.createChildren = function () {
                 _super.prototype.createChildren.call(this);
                 if (!this._textField) {
                     this.checkTextField();
                 }
             };
+            /**
+             * 处理对组件设置的属性
+             */
             TextBase.prototype.commitProperties = function () {
                 _super.prototype.commitProperties.call(this);
                 if (!this._textField) {
@@ -424,6 +438,9 @@ var egret;
                 this._text = this._textField.text;
                 this._textFlow = this._textField.textFlow;
             };
+            /**
+             * 计算组件的默认大小和（可选）默认最小大小
+             */
             TextBase.prototype.measure = function () {
                 _super.prototype.measure.call(this);
                 this.measuredWidth = TextBase.DEFAULT_MEASURED_WIDTH;
@@ -446,6 +463,12 @@ var egret;
                 this._textField.width = unscaledWidth;
                 this._textField.height = unscaledHeight;
             };
+            /**
+             * 更新属性时调度 PropertyChangeEvent 的 Helper 方法
+             * @param propertyName
+             * @param oldValue
+             * @param value
+             */
             TextBase.prototype.dispatchPropertyChangeEvent = function (propertyName, oldValue, value) {
                 if (this.hasEventListener("propertyChange"))
                     gui.PropertyChangeEvent.dispatchPropertyChangeEvent(this, gui.PropertyChangeEventKind.UPDATE, propertyName, oldValue, value, this);

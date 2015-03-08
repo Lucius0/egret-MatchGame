@@ -15,10 +15,8 @@ var skins;
                 this.__s = egret.gui.setProperties;
                 this.elementsContent = [this.__4_i()];
                 this.states = [
-                    new egret.gui.State("normal", [
-                    ]),
-                    new egret.gui.State("disabled", [
-                    ])
+                    new egret.gui.State("normal", []),
+                    new egret.gui.State("disabled", [])
                 ];
             }
             Object.defineProperty(TreeSkin.prototype, "skinParts", {

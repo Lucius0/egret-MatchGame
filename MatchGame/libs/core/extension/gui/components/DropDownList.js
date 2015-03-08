@@ -75,6 +75,7 @@ var egret;
                 configurable: true
             });
             /**
+             * 添加外观部件时调用
              * @method egret.gui.DropDownList#partAdded
              * @param partName {string}
              * @param instance {any}
@@ -86,6 +87,10 @@ var egret;
                     this.invalidateProperties();
                 }
             };
+            /**
+             * 绘制对象和/或设置其子项的大小和位置
+             * @param displayItem
+             */
             DropDownList.prototype.updateLabelDisplay = function (displayItem) {
                 if (displayItem === void 0) { displayItem = undefined; }
                 if (this.labelDisplay) {

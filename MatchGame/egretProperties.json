@@ -1,17 +1,18 @@
 {
-    "document_class": "GameApp",
-    "modules": [
-        {
-            "name": "core"
-        },
+	"document_class": "GameApp",
+	"modules": [
 		{
-            "name": "gui"
-        }
-    ],
-    "native": {
-        "path_ignore": [
-
-        ]
-    },
-    "egret_version":"1.5.3"
+			"name": "core"
+		},
+		{
+			"name": "res"
+		},
+		{
+			"name": "gui"
+		}
+	],
+	"native": {
+		"path_ignore": []
+	},
+	"egret_version": "1.5.5"
 }

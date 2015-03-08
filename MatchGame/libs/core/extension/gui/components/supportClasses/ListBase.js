@@ -43,6 +43,7 @@ var egret;
         var ListBase = (function (_super) {
             __extends(ListBase, _super);
             /**
+             * 构造函数
              * @method egret.gui.ListBase#constructor
              */
             function ListBase() {
@@ -273,6 +274,7 @@ var egret;
                     this.layout.useVirtualLayout = value;
             };
             /**
+             * 处理对组件设置的属性
              * @method egret.gui.ListBase#commitProperties
              */
             ListBase.prototype.commitProperties = function () {
@@ -343,6 +345,7 @@ var egret;
                     renderer.label = this.itemToLabel(renderer.data);
             };
             /**
+             * 添加外观部件时调用
              * @method egret.gui.ListBase#partAdded
              * @param partName {string}
              * @param instance {any}
@@ -357,6 +360,7 @@ var egret;
                 }
             };
             /**
+             * 正删除外观部件的实例时调用
              * @method egret.gui.ListBase#partRemoved
              * @param partName {string}
              * @param instance {any}
@@ -369,6 +373,7 @@ var egret;
                 }
             };
             /**
+             * 更新项呈示器，以备使用或重用
              * @method egret.gui.ListBase#updateRenderer
              * @param renderer {IItemRenderer}
              * @param itemIndex {number}
@@ -380,6 +385,7 @@ var egret;
                 return _super.prototype.updateRenderer.call(this, renderer, itemIndex, data);
             };
             /**
+             * 如果有一个数据项目，则返回呈示器应该显示的正确文本，同时将 labelField 和 labelFunction 属性考虑在内
              * @method egret.gui.ListBase#itemToLabel
              * @param item {any}
              * @returns {string}

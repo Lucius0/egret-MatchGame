@@ -34,12 +34,22 @@ var egret;
 (function (egret) {
     var gui;
     (function (gui) {
+        /**
+         * @classic
+         * VScrollBar（垂直 ScrollBar）控件可以在因数据太多而不能在显示区域中以垂直方向完全显示时控制显示的数据部分
+         */
         var VScrollBar = (function (_super) {
             __extends(VScrollBar, _super);
             function VScrollBar() {
                 _super.call(this);
                 this._thumbLengthRatio = 1;
             }
+            /**
+             *
+             * @param height
+             * @param contentHeight
+             * @private
+             */
             VScrollBar.prototype._setViewportMetric = function (height, contentHeight) {
                 var max = Math.max(0, contentHeight - height);
                 this._thumbLengthRatio = contentHeight <= height ? 1 : height / contentHeight;
@@ -51,7 +61,7 @@ var egret;
                     return 1;
                 },
                 set: function (value) {
-                    egret.Logger.warning("VScrollBar.trackAlpha已经废弃");
+                    egret.Logger.warningWithErrorId(1016, "VScrollBar.trackAlpha");
                 },
                 enumerable: true,
                 configurable: true
@@ -61,7 +71,7 @@ var egret;
                     return 1;
                 },
                 set: function (value) {
-                    egret.Logger.warning("VScrollBar.thumbAlpha已经废弃");
+                    egret.Logger.warningWithErrorId(1016, "VScrollBar.thumbAlpha");
                 },
                 enumerable: true,
                 configurable: true
@@ -85,6 +95,7 @@ var egret;
                 this.dispatchEventWith(egret.Event.CHANGE);
             };
             /**
+             * 将相对于轨道的 x,y 像素位置转换为介于最小值和最大值（包括两者）之间的一个值
              * @param x {number}
              * @param y {number}
              * @returns {number}
@@ -96,6 +107,9 @@ var egret;
                 var thumbRange = this.track.layoutBoundsHeight - this.thumb.layoutBoundsHeight;
                 return this.minimum + ((thumbRange != 0) ? (y / thumbRange) * range : 0);
             };
+            /**
+             * 设置外观部件（通常为滑块）的边界，这些外观部件的几何图形不是完全由外观的布局指定的
+             */
             VScrollBar.prototype.updateSkinDisplayList = function () {
                 if (!this.thumb || !this.track)
                     return;

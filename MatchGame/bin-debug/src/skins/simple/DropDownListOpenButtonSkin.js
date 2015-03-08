@@ -23,8 +23,7 @@ var skins;
                         new egret.gui.SetProperty("__4", "source", "DropDownListButtonSkin_down_png"),
                         new egret.gui.SetProperty("__5", "source", "dropdownlist_arrow_down_png")
                     ]),
-                    new egret.gui.State("disabled", [
-                    ])
+                    new egret.gui.State("disabled", [])
                 ];
             }
             DropDownListOpenButtonSkin.prototype.__4_i = function () {

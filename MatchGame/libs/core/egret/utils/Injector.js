@@ -70,7 +70,7 @@ var egret;
          * @method egret.Injector.hasMapRule
          * @param whenAskedFor {any} 传递类定义或类的完全限定名作为需要映射的键。
          * @param named {string} 可选参数，在同一个类作为键需要映射多条规则时，可以传入此参数区分不同的映射。
-         * @returns {boolean}
+         * @returns {boolean} 指定的映射规则是否存在
          */
         Injector.hasMapRule = function (whenAskedFor, named) {
             if (named === void 0) { named = ""; }
@@ -85,7 +85,7 @@ var egret;
          * @method egret.Injector.getInstance
          * @param clazz {any} 类定义或类的完全限定名
          * @param named {string} 可选参数，若在调用mapClass()映射时设置了这个值，则要传入同样的字符串才能获取对应的单例
-         * @returns {any}
+         * @returns {any} 获取指定类映射的单例
          */
         Injector.getInstance = function (clazz, named) {
             if (named === void 0) { named = ""; }
@@ -99,7 +99,7 @@ var egret;
                 delete this.mapClassDic[requestName];
                 return instance;
             }
-            throw new Error("调用了未配置的注入规则:" + requestName + "。 请先在项目初始化里配置指定的注入规则，再调用对应单例。");
+            throw new Error(egret.getString(1028, requestName));
         };
         /**
          * 储存类的映射规则

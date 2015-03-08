@@ -34,6 +34,10 @@ var egret;
 (function (egret) {
     var gui;
     (function (gui) {
+        /**
+         * TextInput 是一个文本输入控件，供用户输入和编辑单行统一格式文本
+         * @classic
+         */
         var TextInput = (function (_super) {
             __extends(TextInput, _super);
             /**
@@ -60,6 +64,7 @@ var egret;
                 this.dispatchEvent(new egret.Event(egret.Event.CHANGE));
             };
             /**
+             * 添加外观部件时调用
              * @inheritDoc
              */
             TextInput.prototype.partAdded = function (partName, instance) {
@@ -69,6 +74,7 @@ var egret;
                 }
             };
             /**
+             *  创建外观部件的引用
              * @inheritDoc
              */
             TextInput.prototype.createSkinParts = function () {
