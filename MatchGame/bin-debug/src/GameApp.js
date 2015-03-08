@@ -50,9 +50,8 @@ var GameApp = (function (_super) {
                 var r = Math.floor(Math.random() * cardList.length);
                 c.cardFace = cardList[r];
                 cardList.splice(r, 1);
-                c.addEventListener(egret.TouchEvent.TOUCH_END, this.clickCard, this);
-                c.touchEnabled = true;
                 this.addChild(c);
+                c.addEventListener(egret.TouchEvent.TOUCH_TAP, this.clickCard, this);
                 this.cardsLeft++;
             }
         }
@@ -70,7 +69,7 @@ var GameApp = (function (_super) {
         this.addEventListener(egret.Event.ENTER_FRAME, this.showTime, this);
     };
     GameApp.prototype.clickCard = function (e) {
-        console.log(1);
+        console.log("1111111111111111111111111111");
         var thisCard = e.target;
         if (this.firstCard == null) {
             this.firstCard = thisCard;

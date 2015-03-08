@@ -71,12 +71,17 @@ class Main extends egret.DisplayObjectContainer {
             RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
             //this.createScene();
 
-            var data = RES.getRes("card_json");
-            var texture = RES.getRes("card_png");
-            var mcDataFactory = new egret.MovieClipDataFactory(data, texture);
-            var mc = new egret.MovieClip(mcDataFactory.generateMovieClipData());
-            this.addChild(mc);
-            mc.addEventListener(egret.TouchEvent.TOUCH_TAP, this.click, this);
+            var tmc:TestMovieClip = new TestMovieClip();
+            tmc.touchEnabled = true;
+            tmc.touchChildren = true;
+            this.addChild(tmc);
+            tmc.addEventListener(egret.TouchEvent.TOUCH_TAP, this.click, this);
+            //var data = RES.getRes("card_json");
+            //var texture = RES.getRes("card_png");
+            //var mcDataFactory = new egret.MovieClipDataFactory(data, texture);
+            //var mc = new egret.MovieClip(mcDataFactory.generateMovieClipData());
+            //this.addChild(mc);
+            //mc.addEventListener(egret.TouchEvent.TOUCH_TAP, this.click, this);
         }
     }
 

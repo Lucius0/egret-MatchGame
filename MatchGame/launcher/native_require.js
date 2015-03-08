@@ -88,7 +88,7 @@ egret_native.egretStart = function () {
         configurable: true
     });
 
-    var document_class = "Main";
+    var document_class = "GameApp";
     var rootClass;
     if (document_class) {
         rootClass = egret.getDefinitionByName(document_class);

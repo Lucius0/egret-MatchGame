@@ -1,14 +1,9 @@
 class Card extends egret.MovieClip
 {
-    private flipStep:number;
-    private isFlipping:boolean = false;
-    private flipToFrame:number;
-    public cardFace:number;
-    //private mc:egret.MovieClip;
-
     public constructor()
     {
         super();
+        this.touchEnabled = true;
         //var data = RES.getRes("card_json");
         //var texture = RES.getRes("card_png");
         //var mcDataFactory = new egret.MovieClipDataFactory(data, texture);
@@ -17,7 +12,10 @@ class Card extends egret.MovieClip
         //this.mc.gotoAndStop(1);
         //this.addChild(this.mc);
     }
-
+    private flipStep:number;
+    private isFlipping:boolean = false;
+    private flipToFrame:number;
+    public cardFace:number;
     public startFlip(flipToWhichFrame:number):void
     {
         this.isFlipping = true;
