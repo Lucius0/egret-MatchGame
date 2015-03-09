@@ -67,15 +67,11 @@ class GameApp extends egret.DisplayObjectContainer
 
         this.cardsLeft = 0;
 
-        var data = RES.getRes("card_json");
-        var texture = RES.getRes("card_png");
-        var mcDataFactory = new egret.MovieClipDataFactory(data, texture);
-
         for(var x:number = 0; x < GameApp.boardWidth; x++)
         {
             for(var y:number = 0; y < GameApp.boardHeight; y++)
             {
-                var c:Card = <Card>(new egret.MovieClip(mcDataFactory.generateMovieClipData()));
+                var c:Card = new Card();
                 c.touchEnabled = true;
                 c.x = x * GameApp.cardHorizontalSpacing + GameApp.boardOffsetX; // set position
                 c.y = y * GameApp.cardVerticalSpacing + GameApp.boardOffsetY;
@@ -106,7 +102,6 @@ class GameApp extends egret.DisplayObjectContainer
     private clickCard(e:egret.TouchEvent):void
     {
         var thisCard:Card = <Card>(e.target);
-
         if(this.firstCard == null)
         {
             this.firstCard = thisCard;

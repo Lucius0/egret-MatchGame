@@ -39,12 +39,9 @@ var GameApp = (function (_super) {
             cardList.push(i);
         }
         this.cardsLeft = 0;
-        var data = RES.getRes("card_json");
-        var texture = RES.getRes("card_png");
-        var mcDataFactory = new egret.MovieClipDataFactory(data, texture);
         for (var x = 0; x < GameApp.boardWidth; x++) {
             for (var y = 0; y < GameApp.boardHeight; y++) {
-                var c = (new egret.MovieClip(mcDataFactory.generateMovieClipData()));
+                var c = new Card();
                 c.touchEnabled = true;
                 c.x = x * GameApp.cardHorizontalSpacing + GameApp.boardOffsetX; // set position
                 c.y = y * GameApp.cardVerticalSpacing + GameApp.boardOffsetY;
